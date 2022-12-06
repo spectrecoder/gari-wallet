@@ -1,0 +1,18 @@
+ext {
+
+    versions = [
+            lifecycleVersion: "2.5.1",
+            koinVersion     : "3.1.5"
+    ]
+
+    lifeCycle = [
+            core     : "androidx.lifecycle:lifecycle-common:${versions.lifecycleVersion}",
+            viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycleVersion}",
+            liveData : "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycleVersion}",
+    ]
+
+    di = [
+            koinCore  : "io.insert-koin:koin-android:${versions.koinVersion}",
+            koinCompat: "io.insert-koin:koin-android-compat:${versions.koinVersion}",
+    ]
+}
