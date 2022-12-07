@@ -7,8 +7,11 @@ internal class GariWalletRepository(
     private val gariNetworkService: GariNetworkService
 ) {
 
-    fun getWalletDetails(token: String): Result<GariWallet> {
-        return gariNetworkService.getWalletDetails(token)
+    fun getWalletDetails(
+        gariClientId: String,
+        token: String
+    ): Result<GariWallet> {
+        return gariNetworkService.getWalletDetails(gariClientId, token)
             .map { GariWallet() }
     }
 }

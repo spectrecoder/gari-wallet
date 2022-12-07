@@ -16,6 +16,8 @@ internal class NetworkClient(
     private val httpClient = okHttpClientProvider.provideOkHttpClient()
 
     fun <T> get(
+        gariClientId: String,
+        token: String,
         path: String,
         params: Map<String, String> = emptyMap(),
         response: Class<T>
@@ -34,6 +36,8 @@ internal class NetworkClient(
         val resultType: Type = TypeToken.getParameterized(response).type
 
         val request: Request = Request.Builder()
+            .header(Api.Header.TOKEN, token)
+            .header(Api.Header.GARI_CLIENT_ID, gariClientId)
             .url(url)
             .get()
             .build()

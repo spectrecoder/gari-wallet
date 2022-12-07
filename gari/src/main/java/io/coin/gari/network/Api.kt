@@ -6,8 +6,12 @@ internal object Api {
         const val BASE_URL = "https://dev-gari-sdk-backend.chingari.io/"
     }
 
-    object Path {
+    object Header {
+        const val GARI_CLIENT_ID = "gariclientid"
+        const val TOKEN = "token"
+    }
 
+    object Path {
         const val WALLET_DETAILS = "/Appwallet/getWalletDetails"
     }
 }

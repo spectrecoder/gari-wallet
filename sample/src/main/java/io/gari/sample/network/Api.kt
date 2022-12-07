@@ -4,7 +4,8 @@ object Api {
 
     object Url {
 
-        const val DUMMY_TOKEN_DOMAIN = "https://gari-sdk.vercel.app"
+
+        const val DUMMY_TOKEN_DOMAIN = "https://demo-gari-sdk.vercel.app"
     }
 
     object Path {
@@ -14,7 +15,6 @@ object Api {
 
     object Param {
 
-        const val ID = "id"
-        const val NAME = "name"
+        const val USER_ID = "userId"
     }
 }

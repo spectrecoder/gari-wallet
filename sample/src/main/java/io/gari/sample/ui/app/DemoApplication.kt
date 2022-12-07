@@ -10,6 +10,8 @@ class DemoApplication : Web3AuthApp() {
         super.onCreate()
 
         KoinLoader.start(this)
+
+        Gari.initialize("0319a8fc-b289-4a28-92f9-22ae141bd477")
         Gari.setLogsEnabled(true)
     }
 }

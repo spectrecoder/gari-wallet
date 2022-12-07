@@ -9,7 +9,8 @@ internal class OkHttpClientProvider {
     private val loggingInterceptor = HttpLoggingInterceptor()
         .setLevel(getLogLevel(LOGS_ENABLED_DEFAULT))
 
-    private val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor)
+    private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
         .readTimeout(OKHTTP_READ_TIMEOUT, TimeUnit.SECONDS)
         .connectTimeout(OKHTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS).build()
 

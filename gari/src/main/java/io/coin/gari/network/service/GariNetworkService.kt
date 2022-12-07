@@ -8,9 +8,14 @@ internal class GariNetworkService(
     private val networkClient: NetworkClient
 ) {
 
-    fun getWalletDetails(token: String): Result<ApiGariWallet> {
+    fun getWalletDetails(
+        gariClientId: String,
+        token: String
+    ): Result<ApiGariWallet> {
         return try {
             val apiWallet = networkClient.get(
+                gariClientId = gariClientId,
+                token = token,
                 path = Api.Path.WALLET_DETAILS,
                 response = ApiGariWallet::class.java
             )

@@ -23,6 +23,9 @@ object Gari {
     }
 
     fun getWalletDetails(token: String): Result<GariWallet> {
-        return gariWalletRepository.getWalletDetails(token)
+        return gariWalletRepository.getWalletDetails(
+            gariClientId = clientId,
+            token = token
+        )
     }
 }
