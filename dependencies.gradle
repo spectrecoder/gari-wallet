@@ -1,8 +1,15 @@
 ext {
 
+    appConfig = [
+            minSdk: 24,
+            targetSdk: 32,
+            compileSdk: 32,
+    ]
+
     versions = [
             lifecycleVersion: "2.5.1",
-            koinVersion     : "3.1.5"
+            koinVersion     : "3.1.5",
+            web3AuthVersion : "3.0.0",
     ]
 
     lifeCycle = [
@@ -14,5 +21,9 @@ ext {
     di = [
             koinCore  : "io.insert-koin:koin-android:${versions.koinVersion}",
             koinCompat: "io.insert-koin:koin-android-compat:${versions.koinVersion}",
+    ]
+
+    web3Auth = [
+            core: "org.torusresearch:web3auth-android-sdk:${versions.web3AuthVersion}"
     ]
 }

@@ -7,12 +7,12 @@ apply from: '../dependencies.gradle'
 
 android {
     namespace 'io.gari.sample'
-    compileSdk 32
+    compileSdk appConfig.compileSdk
 
     defaultConfig {
         applicationId "io.gari.sample"
-        minSdk 21
-        targetSdk 32
+        minSdk appConfig.minSdk
+        targetSdk appConfig.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -51,6 +51,8 @@ dependencies {
 
     implementation di.koinCore
     implementation di.koinCompat
+
+    implementation web3Auth.core
 
     implementation project(":gari")
 
