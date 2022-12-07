@@ -15,6 +15,11 @@ ext {
             web3Auth : "3.0.0",
             retrofit : "2.9.0",
             okHttp   : "4.10.0",
+            gson     : "2.10",
+    ]
+
+    testingVersions = [
+            junit: "4.13.2",
     ]
 
     android = [
@@ -41,6 +46,12 @@ ext {
     network = [
             retrofitCore         : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
             retrofitConverterGson: "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
-            okhttpLogging        : "com.squareup.okhttp3:logging-interceptor:${versions.okHttp}"
+            okHttp               : "com.squareup.okhttp3:okhttp:${versions.okHttp}",
+            okHttpLogging        : "com.squareup.okhttp3:logging-interceptor:${versions.okHttp}",
+            gson                 : "com.google.code.gson:gson:${versions.gson}"
+    ]
+
+    unitTesting = [
+            junit: "junit:junit:${testingVersions.junit}"
     ]
 }

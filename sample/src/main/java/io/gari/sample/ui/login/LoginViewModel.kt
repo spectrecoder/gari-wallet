@@ -3,6 +3,7 @@ package io.gari.sample.ui.login
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.coin.gari.domain.Gari
 import io.gari.sample.data.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,8 +33,11 @@ class LoginViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             loginRepository.getWeb3AuthToken(userId, userName)
-                .onSuccess {
-                    action.postValue(LoginAction.Web3AuthTokenReady(it))
+                .onSuccess { token ->
+                    Gari.getWalletDetails(token)
+
+
+                    action.postValue(LoginAction.Web3AuthTokenReady(token))
                 }.onFailure {
 
                 }
