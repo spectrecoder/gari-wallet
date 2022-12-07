@@ -7,7 +7,8 @@ import org.koin.core.context.startKoin
 object KoinLoader {
 
     fun start(application: Context) {
-        val moduleList = loginModule
+        val moduleList = loginModule +
+                networkModule
 
         startKoin {
             androidContext(application)

@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         override fun onClick(view: View) {
             when (view.id) {
                 R.id.btnLogin -> {
-                    web3AuthManager.login()
+                    viewModel.doLogin()
                 }
             }
         }

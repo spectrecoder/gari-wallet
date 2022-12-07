@@ -8,6 +8,14 @@ import com.web3auth.core.Web3Auth
 import com.web3auth.core.types.*
 import java8.util.concurrent.CompletableFuture
 
+/**
+ * Sides: DEMO, SDK
+ *
+ * 1. DEMO: it's getting token from 'user_id' (web form) - through API https://gari-sdk.vercel.app/api/login?name=${name}&id=${id}
+ * 2. DEMO: is using this API just for debugging purpose
+ *
+ */
+
 class Web3AuthManagerImpl : Web3AuthManager {
 
     private lateinit var web3Auth: Web3Auth
@@ -27,6 +35,14 @@ class Web3AuthManagerImpl : Web3AuthManager {
                     true,
                     hashMapOf("primary" to "#229954")
                 ),
+                loginConfig = hashMapOf(
+                    "jwt" to LoginConfigItem(
+                        verifier = "gari-sdk",
+                        name = "Gari Verifier",
+                        clientId = WEB3_AUTH_CLIENT_ID,
+                        typeOfLogin = TypeOfLogin.JWT,
+                    )
+                )
             )
         )
 
@@ -45,17 +61,22 @@ class Web3AuthManagerImpl : Web3AuthManager {
         }
     }
 
+    // Handle user signing in when app is active
     override fun onNewIntent(intent: Intent?) {
-        // Handle user signing in when app is active
         web3Auth.setResultUrl(intent?.data)
     }
 
     override fun login() {
-        val selectedLoginProvider = Provider.GOOGLE   // Can be GOOGLE, FACEBOOK, TWITCH etc.
-        val loginCompletableFuture: CompletableFuture<Web3AuthResponse> =
-            web3Auth.login(LoginParams(selectedLoginProvider))
-
-        loginCompletableFuture.whenComplete { loginResponse, error ->
+        web3Auth.login(
+            LoginParams(
+                loginProvider = Provider.JWT,
+                extraLoginOptions = ExtraLoginOptions(
+                    verifierIdField = "uid",
+                    response_type = "token",
+                    scope = "email"
+                )
+            )
+        ).whenComplete { loginResponse, error ->
             if (error == null) {
                 println(loginResponse)
             } else {
