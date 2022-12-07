@@ -3,7 +3,7 @@ package io.gari.sample.ui.login
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.coin.gari.domain.Gari
+import io.gari.sample.R
 import io.gari.sample.data.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,25 +13,33 @@ class LoginViewModel(
 ) : ViewModel() {
 
     val userId = MutableLiveData<String>()
+    val userIdError = MutableLiveData<InputError?>()
+
     val action = MutableLiveData<LoginAction?>()
+    val isProcessing = MutableLiveData(false)
 
     fun doLogin() {
+        if (isProcessing.value == true) {
+            return
+        }
+
         val userId = userId.value
 
         if (userId.isNullOrEmpty()) {
-            // todo: validation error
+            userIdError.value = InputError.EmptyField(R.string.login_error_empty_user_id)
             return
         }
+
+        userIdError.value = null
+        isProcessing.value = true
 
         viewModelScope.launch(Dispatchers.IO) {
             loginRepository.getWeb3AuthToken(userId)
                 .onSuccess { token ->
-                    Gari.getWalletDetails(token)
-
-
                     action.postValue(LoginAction.Web3AuthTokenReady(token))
+                    isProcessing.postValue(false)
                 }.onFailure {
-
+                    isProcessing.postValue(false)
                 }
         }
     }

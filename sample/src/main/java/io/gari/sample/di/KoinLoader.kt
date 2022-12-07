@@ -8,6 +8,7 @@ object KoinLoader {
 
     fun start(application: Context) {
         val moduleList = loginModule +
+                walletModule +
                 networkModule
 
         startKoin {
