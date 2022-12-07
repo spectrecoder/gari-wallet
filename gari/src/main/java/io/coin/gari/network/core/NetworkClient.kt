@@ -3,6 +3,7 @@ package io.coin.gari.network.core
 import android.net.Uri
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.coin.gari.exceptions.InvalidResponseBodyException
 import io.coin.gari.network.Api
 import okhttp3.Request
 import okhttp3.Response
@@ -15,13 +16,41 @@ internal class NetworkClient(
 
     private val httpClient = okHttpClientProvider.provideOkHttpClient()
 
+    @Throws(InvalidResponseBodyException::class)
     fun <T> get(
         gariClientId: String,
         token: String,
         path: String,
         params: Map<String, String> = emptyMap(),
-        response: Class<T>
+        responseClass: Class<T>
     ): T {
+        val response = get(
+            gariClientId,
+            token,
+            path,
+            params
+        )
+
+        val responseBody = response.body?.string()
+
+        if (responseBody.isNullOrEmpty()) {
+            throw InvalidResponseBodyException()
+        }
+
+        val resultType: Type = TypeToken.getParameterized(responseClass).type
+        return try {
+            gson.fromJson(responseBody, resultType)
+        } catch (error: Throwable) {
+            throw InvalidResponseBodyException(error)
+        }
+    }
+
+    fun get(
+        gariClientId: String,
+        token: String,
+        path: String,
+        params: Map<String, String> = emptyMap(),
+    ): Response {
         val urlBuilder = Uri.parse(Api.Url.BASE_URL)
             .buildUpon()
             .path(path)
@@ -33,8 +62,6 @@ internal class NetworkClient(
         val url = urlBuilder.build()
             .toString()
 
-        val resultType: Type = TypeToken.getParameterized(response).type
-
         val request: Request = Request.Builder()
             .header(Api.Header.TOKEN, token)
             .header(Api.Header.GARI_CLIENT_ID, gariClientId)
@@ -42,8 +69,7 @@ internal class NetworkClient(
             .get()
             .build()
 
-        val response: Response = httpClient.newCall(request).execute()
-        return gson.fromJson(response.body!!.string(), resultType)
+        return httpClient.newCall(request).execute()
     }
 
     fun setLogsEnabled(enable: Boolean) {

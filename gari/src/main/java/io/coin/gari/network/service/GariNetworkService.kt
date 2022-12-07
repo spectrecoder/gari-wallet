@@ -17,7 +17,7 @@ internal class GariNetworkService(
                 gariClientId = gariClientId,
                 token = token,
                 path = Api.Path.WALLET_DETAILS,
-                response = ApiGariWallet::class.java
+                responseClass = ApiGariWallet::class.java
             )
             Result.success(apiWallet)
         } catch (error: Throwable) {
