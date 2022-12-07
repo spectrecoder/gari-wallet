@@ -9,5 +9,8 @@ import retrofit2.http.Query
 interface LoginApiService {
 
     @GET(Api.Path.LOGIN)
-    suspend fun getWeb3AuthToken(@Query(Api.Param.ID) userId: String): Response<ApiWeb3AuthToken>
+    suspend fun getWeb3AuthToken(
+        @Query(Api.Param.ID) userId: String,
+        @Query(Api.Param.NAME) userName: String,
+    ): Response<ApiWeb3AuthToken>
 }

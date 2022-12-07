@@ -20,10 +20,10 @@
         android:padding="16dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputClientId"
+            android:id="@+id/inputUserId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/login_client_id_hint"
+            android:hint="@string/login_user_id_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -32,6 +32,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={viewModel.userId}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="@string/login_user_name_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputUserId">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.userName}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,7 +61,7 @@
             android:text="@string/login_cta_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputClientId" />
+            app:layout_constraintTop_toBottomOf="@+id/inputName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

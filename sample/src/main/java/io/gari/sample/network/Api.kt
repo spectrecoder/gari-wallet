@@ -15,5 +15,6 @@ object Api {
     object Param {
 
         const val ID = "id"
+        const val NAME = "name"
     }
 }

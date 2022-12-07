@@ -2,7 +2,8 @@
 
     <string name="app_name">Gari Wallet Sample</string>
 
-    <string name="login_client_id_hint">Client it</string>
+    <string name="login_user_id_hint">User it</string>
+    <string name="login_user_name_hint">User name</string>
     <string name="login_cta_button">Login</string>
 
 </resources>

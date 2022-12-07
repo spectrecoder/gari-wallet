@@ -4,9 +4,12 @@ class LoginNetworkService(
     private val loginApiService: LoginApiService
 ) {
 
-    suspend fun getWeb3AuthToken(userId: String): Result<String> {
+    suspend fun getWeb3AuthToken(
+        userId: String,
+        userName: String,
+    ): Result<String> {
         try {
-            val response = loginApiService.getWeb3AuthToken(userId)
+            val response = loginApiService.getWeb3AuthToken(userId, userName)
             val responseBody = response.body()
             val web3AuthToken = responseBody?.token
 

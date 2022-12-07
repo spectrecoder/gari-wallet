@@ -6,7 +6,10 @@ class LoginRepository(
     private val loginNetworkService: LoginNetworkService
 ) {
 
-    suspend fun getWeb3AuthToken(userId: String): Result<String> {
-        return loginNetworkService.getWeb3AuthToken(userId)
+    suspend fun getWeb3AuthToken(
+        userId: String,
+        userName: String,
+    ): Result<String> {
+        return loginNetworkService.getWeb3AuthToken(userId, userName)
     }
 }
