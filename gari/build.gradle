@@ -43,6 +43,8 @@ dependencies {
     implementation network.okHttpLogging
     implementation network.gson
 
+    implementation web3Auth.core
+
     testImplementation unitTesting.junit
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

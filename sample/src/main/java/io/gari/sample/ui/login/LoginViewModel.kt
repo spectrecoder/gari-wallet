@@ -12,7 +12,7 @@ class LoginViewModel(
     private val loginRepository: LoginRepository
 ) : ViewModel() {
 
-    val userId = MutableLiveData<String>()
+    val userId = MutableLiveData<String>("12345")
     val userIdError = MutableLiveData<InputError?>()
 
     val action = MutableLiveData<LoginAction?>()

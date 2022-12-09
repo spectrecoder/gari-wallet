@@ -8,8 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import io.gari.sample.R
 import io.gari.sample.databinding.ActivityWalletDetailsBinding
-import io.gari.sample.domain.web3auth.Web3AuthManagerImpl
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -20,7 +18,6 @@ class WalletDetailsActivity : AppCompatActivity() {
             ?: throw IllegalStateException("Forget to pass web3 auth token?")
 
     private val viewModel: WalletDetailsViewModel by viewModel { parametersOf(web3AuthToken) }
-    private val web3AuthManager: Web3AuthManagerImpl by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +29,7 @@ class WalletDetailsActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        web3AuthManager.onCreate(this, intent)
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-
-        web3AuthManager.onNewIntent(intent)
+        viewModel.loadWalletDetails(this, intent)
     }
 
     private inner class PageClickListener : View.OnClickListener {

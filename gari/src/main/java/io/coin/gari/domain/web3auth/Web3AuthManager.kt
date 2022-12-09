@@ -1,4 +1,4 @@
-package io.gari.sample.domain.web3auth
+package io.coin.gari.domain.web3auth
 
 import android.content.Context
 import android.content.Intent
@@ -9,5 +9,5 @@ interface Web3AuthManager {
 
     fun onNewIntent(intent: Intent?)
 
-    fun login()
+    fun login(jwtToken : String)
 }

@@ -1,5 +1,7 @@
 package io.gari.sample.ui.wallet.details
 
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.coin.gari.domain.Gari
@@ -10,9 +12,9 @@ class WalletDetailsViewModel(
     private val web3AuthToken: String
 ) : ViewModel() {
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            Gari.getWalletDetails(web3AuthToken)
+    fun loadWalletDetails(context: Context, intent : Intent) {
+        viewModelScope.launch(Dispatchers.Main) {
+            Gari.getWalletDetails(context, intent, web3AuthToken)
         }
     }
 }

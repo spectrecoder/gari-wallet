@@ -12,7 +12,7 @@ ext {
             material : "1.7.0",
             lifecycle: "2.5.1",
             koin     : "3.1.5",
-            web3Auth : "3.0.0",
+            web3Auth : "3.1.0",
             retrofit : "2.9.0",
             okHttp   : "4.10.0",
             gson     : "2.10",
