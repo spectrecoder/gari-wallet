@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import io.coin.gari.domain.Gari
-import io.coin.gari.domain.crypto.Account
 import io.coin.gari.domain.web3auth.Web3AuthManager
 import io.coin.gari.domain.web3auth.Web3AuthManagerImpl
 import io.gari.sample.R
@@ -55,9 +54,16 @@ class LoginActivity : AppCompatActivity() {
     private fun openWalletDetails(token: String) {
 
         web3AuthManager.login(token)
-            .whenComplete { t, u ->
+            .whenComplete { keyPair, u ->
                 lifecycleScope.launch(Dispatchers.IO) {
-                    Gari.createWallet(token, Account(t).publicKey.toBase58())
+                    Gari.createWallet(token, keyPair.second)
+
+                    Gari.getAirDrop(
+                        token = token,
+                        pubKey = keyPair.second,
+                        privateKey = keyPair.first,
+                        amount = "100000"
+                    )
                 }
             }
 

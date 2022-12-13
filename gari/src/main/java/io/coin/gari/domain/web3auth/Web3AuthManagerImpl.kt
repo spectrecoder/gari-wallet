@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import com.portto.solana.web3.KeyPair
 import com.web3auth.core.Web3Auth
 import com.web3auth.core.types.*
 import io.coin.gari.R
@@ -13,7 +14,7 @@ class Web3AuthManagerImpl : Web3AuthManager {
 
     private lateinit var web3Auth: Web3Auth
 
-    private var privateKey: CompletableFuture<ByteArray>? = null
+    private var privateKey: CompletableFuture<Pair<ByteArray, String>>? = null
 
     override fun onCreate(context: Context, intent: Intent?) {
         val clientId = context.getString(R.string.web3auth_project_id)
@@ -54,8 +55,8 @@ class Web3AuthManagerImpl : Web3AuthManager {
         web3Auth.setResultUrl(intent?.data)
     }
 
-    override fun login(jwtToken: String): CompletableFuture<ByteArray> {
-        val resultOutput = CompletableFuture<ByteArray>()
+    override fun login(jwtToken: String): CompletableFuture<Pair<ByteArray, String>> {
+        val resultOutput = CompletableFuture<Pair<ByteArray, String>>()
 
         web3Auth.login(
             LoginParams(
@@ -67,7 +68,10 @@ class Web3AuthManagerImpl : Web3AuthManager {
                 )
             )
         ).whenComplete { t, u ->
-            resultOutput.complete(t.ed25519PrivKey!!.toByteArray())
+            val privKey = t.ed25519PrivKey!!.toByteArray()
+            val keyPair = KeyPair.fromSecretKey(privKey)
+
+            resultOutput.complete(keyPair.secretKey to keyPair.publicKey.toBase58())
         }
 
         this.privateKey = resultOutput

@@ -35,7 +35,7 @@ internal class NetworkClient(
                     params
                 )
             },
-            responseClass = responseClass
+            responseType = { TypeToken.getParameterized(responseClass).type }
         )
     }
 
@@ -74,6 +74,23 @@ internal class NetworkClient(
         params: Map<String, String> = emptyMap(),
         responseClass: Class<T>
     ): T {
+        return post(
+            gariClientId = gariClientId,
+            token = token,
+            path = path,
+            params = params,
+            responseType = TypeToken.getParameterized(responseClass).type
+        )
+    }
+
+    @Throws(InvalidResponseBodyException::class)
+    fun <T> post(
+        gariClientId: String,
+        token: String,
+        path: String,
+        params: Map<String, String> = emptyMap(),
+        responseType: Type
+    ): T {
         return execute(
             request = {
                 post(
@@ -83,7 +100,7 @@ internal class NetworkClient(
                     params
                 )
             },
-            responseClass = responseClass
+            responseType = { responseType }
         )
     }
 
@@ -117,7 +134,7 @@ internal class NetworkClient(
     @Throws(InvalidResponseBodyException::class)
     private fun <T> execute(
         request: () -> Response,
-        responseClass: Class<T>
+        responseType: () -> Type
     ): T {
         val responseBody = request.invoke().body?.string()
 
@@ -125,9 +142,8 @@ internal class NetworkClient(
             throw InvalidResponseBodyException()
         }
 
-        val resultType: Type = TypeToken.getParameterized(responseClass).type
         return try {
-            gson.fromJson(responseBody, resultType)
+            gson.fromJson(responseBody, responseType.invoke())
         } catch (error: Throwable) {
             throw InvalidResponseBodyException(error)
         }

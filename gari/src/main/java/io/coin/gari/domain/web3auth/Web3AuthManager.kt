@@ -10,5 +10,5 @@ interface Web3AuthManager {
 
     fun onNewIntent(intent: Intent?)
 
-    fun login(jwtToken : String) : CompletableFuture<ByteArray>
+    fun login(jwtToken: String): CompletableFuture<Pair<ByteArray, String>>
 }

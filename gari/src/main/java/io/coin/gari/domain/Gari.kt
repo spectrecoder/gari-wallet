@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import io.coin.gari.di.DataModuleInjection
 import io.coin.gari.di.NetworkModuleInjection
+import io.coin.gari.domain.base64.AndroidBase64Util
 import io.coin.gari.domain.entity.GariWallet
+import io.coin.gari.domain.usecase.RequestAirdropUseCase
 import io.coin.gari.domain.web3auth.Web3AuthManager
 import io.coin.gari.domain.web3auth.Web3AuthManagerImpl
 import io.coin.gari.network.core.NetworkClient
@@ -13,10 +15,19 @@ object Gari {
 
     private var clientId: String = ""
 
-    private val networkClient: NetworkClient = NetworkModuleInjection.providerNetworkClient()
-    private val gariNetworkService = NetworkModuleInjection.provideGariNetworkService(networkClient)
-    private val gariWalletRepository =
-        DataModuleInjection.provideGariWalletRepository(gariNetworkService)
+    private val networkClient: NetworkClient = NetworkModuleInjection
+        .providerNetworkClient()
+
+    private val gariNetworkService = NetworkModuleInjection
+        .provideGariNetworkService(networkClient)
+
+    private val gariWalletRepository = DataModuleInjection
+        .provideGariWalletRepository(gariNetworkService)
+
+    private val requestAirdropUseCase = RequestAirdropUseCase(
+        gariWalletRepository = gariWalletRepository,
+        base64Util = AndroidBase64Util()
+    )
 
     fun initialize(clientId: String) {
         this.clientId = clientId
@@ -37,11 +48,26 @@ object Gari {
         )
     }
 
-    fun createWallet(token: String, pubKey: String) {
-        val walletResult = gariWalletRepository.createWallet(
+    fun createWallet(token: String, pubKey: String): Result<GariWallet> {
+        return gariWalletRepository.createWallet(
             gariClientId = clientId,
             token = token,
             pubKey = pubKey
+        )
+    }
+
+    fun getAirDrop(
+        token: String,
+        pubKey: String,
+        privateKey: ByteArray,
+        amount: String
+    ): Result<Unit> {
+        return requestAirdropUseCase.requestAirdrop(
+            gariClientId = clientId,
+            token = token,
+            pubKey = pubKey,
+            airdropAmount = amount,
+            privateKey = privateKey
         )
     }
 }
