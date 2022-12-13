@@ -44,6 +44,7 @@ dependencies {
     implementation network.gson
 
     implementation web3Auth.core
+    implementation(files(solana.bitcoinj))
 
     testImplementation unitTesting.junit
 

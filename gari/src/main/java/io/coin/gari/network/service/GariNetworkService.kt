@@ -35,4 +35,29 @@ internal class GariNetworkService(
             Result.failure(error)
         }
     }
+
+    fun createWallet(
+        gariClientId: String,
+        token: String,
+        pubKey: String
+    ): Result<ApiGariWallet> {
+        return try {
+            val params = hashMapOf(
+                Api.Param.PUBLIC_KEY to pubKey
+            )
+
+            val apiWalletResponse = networkClient.post(
+                gariClientId = gariClientId,
+                token = token,
+                path = Api.Path.WALLET_CREATE,
+                params = params,
+                responseClass = WalletDetailsResponse::class.java
+            )
+
+
+            Result.success(ApiGariWallet())
+        } catch (error: Throwable) {
+            Result.failure(error)
+        }
+    }
 }

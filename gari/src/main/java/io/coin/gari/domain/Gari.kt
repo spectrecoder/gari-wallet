@@ -36,4 +36,12 @@ object Gari {
             token = token
         )
     }
+
+    fun createWallet(token: String, pubKey: String) {
+        val walletResult = gariWalletRepository.createWallet(
+            gariClientId = clientId,
+            token = token,
+            pubKey = pubKey
+        )
+    }
 }

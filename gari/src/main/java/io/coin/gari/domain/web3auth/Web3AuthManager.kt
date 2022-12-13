@@ -2,6 +2,7 @@ package io.coin.gari.domain.web3auth
 
 import android.content.Context
 import android.content.Intent
+import java8.util.concurrent.CompletableFuture
 
 interface Web3AuthManager {
 
@@ -9,5 +10,5 @@ interface Web3AuthManager {
 
     fun onNewIntent(intent: Intent?)
 
-    fun login(jwtToken : String)
+    fun login(jwtToken : String) : CompletableFuture<ByteArray>
 }

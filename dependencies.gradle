@@ -54,4 +54,8 @@ ext {
     unitTesting = [
             junit: "junit:junit:${testingVersions.junit}"
     ]
+
+    solana = [
+            bitcoinj: "libs/bitcoinj-core-0.16.jar"
+    ]
 }

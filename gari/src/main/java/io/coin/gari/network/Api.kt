@@ -13,5 +13,10 @@ internal object Api {
 
     object Path {
         const val WALLET_DETAILS = "/Appwallet/getWalletDetails"
+        const val WALLET_CREATE = "/Appwallet/newUserWallet"
+    }
+
+    object Param {
+        const val PUBLIC_KEY = "publicKey"
     }
 }

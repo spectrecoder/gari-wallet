@@ -14,4 +14,13 @@ internal class GariWalletRepository(
         return gariNetworkService.getWalletDetails(gariClientId, token)
             .map { GariWallet() }
     }
+
+    fun createWallet(
+        gariClientId: String,
+        token: String,
+        pubKey: String
+    ): Result<GariWallet> {
+        return gariNetworkService.createWallet(gariClientId, token, pubKey)
+            .map { GariWallet() }
+    }
 }

@@ -5,7 +5,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.coin.gari.exceptions.InvalidResponseBodyException
 import io.coin.gari.network.Api
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.lang.reflect.Type
 
@@ -24,25 +26,17 @@ internal class NetworkClient(
         params: Map<String, String> = emptyMap(),
         responseClass: Class<T>
     ): T {
-        val response = get(
-            gariClientId,
-            token,
-            path,
-            params
+        return execute(
+            request = {
+                get(
+                    gariClientId,
+                    token,
+                    path,
+                    params
+                )
+            },
+            responseClass = responseClass
         )
-
-        val responseBody = response.body?.string()
-
-        if (responseBody.isNullOrEmpty()) {
-            throw InvalidResponseBodyException()
-        }
-
-        val resultType: Type = TypeToken.getParameterized(responseClass).type
-        return try {
-            gson.fromJson(responseBody, resultType)
-        } catch (error: Throwable) {
-            throw InvalidResponseBodyException(error)
-        }
     }
 
     fun get(
@@ -72,8 +66,71 @@ internal class NetworkClient(
         return httpClient.newCall(request).execute()
     }
 
+    @Throws(InvalidResponseBodyException::class)
+    fun <T> post(
+        gariClientId: String,
+        token: String,
+        path: String,
+        params: Map<String, String> = emptyMap(),
+        responseClass: Class<T>
+    ): T {
+        return execute(
+            request = {
+                post(
+                    gariClientId,
+                    token,
+                    path,
+                    params
+                )
+            },
+            responseClass = responseClass
+        )
+    }
+
+    fun post(
+        gariClientId: String,
+        token: String,
+        path: String,
+        params: Map<String, String> = emptyMap(),
+    ): Response {
+        val urlBuilder = Uri.parse(Api.Url.BASE_URL)
+            .buildUpon()
+            .path(path)
+
+        val url = urlBuilder.build()
+            .toString()
+
+        val request: Request = Request.Builder()
+            .header(Api.Header.TOKEN, token)
+            .header(Api.Header.GARI_CLIENT_ID, gariClientId)
+            .url(url)
+            .post(gson.toJson(params).toRequestBody(JSON.toMediaType()))
+            .build()
+
+        return httpClient.newCall(request).execute()
+    }
+
     fun setLogsEnabled(enable: Boolean) {
         okHttpClientProvider.setLogsEnabled(enable)
+    }
+
+    @Throws(InvalidResponseBodyException::class)
+    private fun <T> execute(
+        request: () -> Response,
+        responseClass: Class<T>
+    ): T {
+        val responseBody = request.invoke().body?.string()
+
+        if (responseBody.isNullOrEmpty()) {
+            throw InvalidResponseBodyException()
+        }
+
+        val resultType: Type = TypeToken.getParameterized(responseClass).type
+        return try {
+            gson.fromJson(responseBody, resultType)
+        } catch (error: Throwable) {
+            throw InvalidResponseBodyException(error)
+        }
     }
 
     class Builder {
@@ -84,5 +141,10 @@ internal class NetworkClient(
                 gson = Gson()
             )
         }
+    }
+
+    private companion object {
+
+        private const val JSON = "application/json; charset=utf-8"
     }
 }

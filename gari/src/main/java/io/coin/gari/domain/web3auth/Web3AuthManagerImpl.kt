@@ -13,6 +13,8 @@ class Web3AuthManagerImpl : Web3AuthManager {
 
     private lateinit var web3Auth: Web3Auth
 
+    private var privateKey: CompletableFuture<ByteArray>? = null
+
     override fun onCreate(context: Context, intent: Intent?) {
         val clientId = context.getString(R.string.web3auth_project_id)
         web3Auth = Web3Auth(
@@ -52,7 +54,9 @@ class Web3AuthManagerImpl : Web3AuthManager {
         web3Auth.setResultUrl(intent?.data)
     }
 
-    override fun login(jwtToken: String) {
+    override fun login(jwtToken: String): CompletableFuture<ByteArray> {
+        val resultOutput = CompletableFuture<ByteArray>()
+
         web3Auth.login(
             LoginParams(
                 loginProvider = Provider.JWT,
@@ -63,7 +67,11 @@ class Web3AuthManagerImpl : Web3AuthManager {
                 )
             )
         ).whenComplete { t, u ->
-            val a = t.privKey
+            resultOutput.complete(t.ed25519PrivKey!!.toByteArray())
         }
+
+        this.privateKey = resultOutput
+
+        return resultOutput
     }
 }
