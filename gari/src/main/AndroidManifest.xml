@@ -3,4 +3,26 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <application>
+
+        <activity
+            android:name=".ui.Web3LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:path="/auth"
+                    android:scheme="${applicationId}" />
+            </intent-filter>
+
+        </activity>
+
+    </application>
+
 </manifest>

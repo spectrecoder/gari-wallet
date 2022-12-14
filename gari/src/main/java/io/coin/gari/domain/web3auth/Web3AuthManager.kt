@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import java8.util.concurrent.CompletableFuture
 
-interface Web3AuthManager {
+internal interface Web3AuthManager {
 
     fun onCreate(context: Context, intent: Intent?)
 
     fun onNewIntent(intent: Intent?)
 
-    fun login(jwtToken: String): CompletableFuture<Pair<ByteArray, String>>
+    fun login(jwtToken: String): CompletableFuture<ByteArray>
 }
