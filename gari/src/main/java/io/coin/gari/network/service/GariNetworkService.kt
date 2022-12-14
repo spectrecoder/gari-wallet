@@ -2,7 +2,7 @@ package io.coin.gari.network.service
 
 import com.google.gson.reflect.TypeToken
 import io.coin.gari.exceptions.InvalidResponseBodyException
-import io.coin.gari.exceptions.UserNotExistException
+import io.coin.gari.exceptions.WalletNotRegisteredException
 import io.coin.gari.network.Api
 import io.coin.gari.network.core.NetworkClient
 import io.coin.gari.network.entity.ApiEncodedTransaction
@@ -19,21 +19,27 @@ internal class GariNetworkService(
         token: String
     ): Result<ApiGariWallet> {
         return try {
-            val apiWalletResponse = networkClient.get(
+            val apiWalletResponse: WalletDetailsResponse = networkClient.get(
                 gariClientId = gariClientId,
                 token = token,
                 path = Api.Path.WALLET_DETAILS,
-                responseClass = WalletDetailsResponse::class.java
+                responseType = TypeToken.getParameterized(
+                    WalletDetailsResponse::class.java,
+                    ApiGariWallet::class.java
+                ).type
             )
 
             val userExist = apiWalletResponse.userExist
                 ?: throw InvalidResponseBodyException()
 
             if (!userExist) {
-                throw UserNotExistException()
+                throw WalletNotRegisteredException()
             }
 
-            Result.success(ApiGariWallet())
+            val apiWallet = apiWalletResponse.data
+                ?: throw InvalidResponseBodyException()
+
+            Result.success(apiWallet)
         } catch (error: Throwable) {
             Result.failure(error)
         }
@@ -58,7 +64,7 @@ internal class GariNetworkService(
             )
 
 
-            Result.success(ApiGariWallet())
+            Result.failure(InvalidResponseBodyException())
         } catch (error: Throwable) {
             Result.failure(error)
         }

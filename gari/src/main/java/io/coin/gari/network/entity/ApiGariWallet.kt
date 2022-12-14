@@ -1,3 +1,8 @@
 package io.coin.gari.network.entity
 
-class ApiGariWallet
+import com.google.gson.annotations.SerializedName
+
+internal class ApiGariWallet(
+    @SerializedName("publicKey")
+    val publicKey: String?
+)

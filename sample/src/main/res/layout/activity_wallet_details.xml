@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -14,19 +17,134 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/purple_500"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Wallet balance:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/wallet_status_actionbar"
+            app:titleTextColor="@color/white" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:padding="16dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvWalletStatusTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wallet_status_title"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RelativeLayout
+                android:id="@+id/containerWalletActivated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvWalletStatusTitle"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvActivatedTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/wallet_status_activated"
+                    app:drawableStartCompat="@drawable/ic_checkmark_green" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvActivatedTitle"
+                    android:layout_marginTop="16dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:text="@{viewModel.publicKey}"
+                    app:drawableStartCompat="@drawable/ic_key"
+                    tools:text="14214SFafasf2412412sfaf31452153153215142414214fasf2144214" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/containerCheckFailure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvWalletStatusTitle"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvErrorTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/wallet_status_error"
+                    app:drawableStartCompat="@drawable/ic_error" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvErrorDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvErrorTitle"
+                    android:layout_marginTop="16dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    app:drawableStartCompat="@drawable/ic_error_description"
+                    tools:text="Error message stacktrace" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/containerWalletNotActivated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvWalletStatusTitle"
+                tools:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvWalletActivatedTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/wallet_status_not_activated"
+                    app:drawableStartCompat="@drawable/ic_wallet" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnActivateWallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvWalletActivatedTitle"
+                    android:layout_marginTop="16dp"
+                    android:onClick="@{() -> clickListener.onClick(btnActivateWallet)}"
+                    android:text="@string/wallet_status_activate" />
+
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 
 </layout>

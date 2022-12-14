@@ -6,7 +6,9 @@ package io.coin.gari.exceptions
  */
 class InvalidResponseBodyException : Exception {
 
-    constructor(cause: Throwable) : super(cause)
-
     constructor() : super()
+
+    constructor(message: String) : super(message)
+
+    constructor(cause: Throwable) : super(cause)
 }

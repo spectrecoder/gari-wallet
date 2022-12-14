@@ -1,4 +1,5 @@
 package io.coin.gari.domain.entity
 
-class GariWallet {
-}
+class GariWallet(
+    val publicKey: String
+)

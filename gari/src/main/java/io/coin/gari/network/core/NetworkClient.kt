@@ -24,7 +24,7 @@ internal class NetworkClient(
         token: String,
         path: String,
         params: Map<String, String> = emptyMap(),
-        responseClass: Class<T>
+        responseType: Type
     ): T {
         return execute(
             request = {
@@ -35,7 +35,7 @@ internal class NetworkClient(
                     params
                 )
             },
-            responseType = { TypeToken.getParameterized(responseClass).type }
+            responseType = { responseType }
         )
     }
 
