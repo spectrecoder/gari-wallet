@@ -23,10 +23,7 @@ internal class GariNetworkService(
                 gariClientId = gariClientId,
                 token = token,
                 path = Api.Path.WALLET_DETAILS,
-                responseType = TypeToken.getParameterized(
-                    WalletDetailsResponse::class.java,
-                    ApiGariWallet::class.java
-                ).type
+                responseType = TypeToken.getParameterized(WalletDetailsResponse::class.java).type
             )
 
             val userExist = apiWalletResponse.userExist

@@ -8,7 +8,7 @@
     <string name="login_error_empty_user_id">Enter user id!</string>
     <string name="login_toolbar_title">Authorize</string>
 
-    <string name="wallet_status_actionbar">Wallet:</string>
+    <string name="wallet_status_actionbar">Wallet</string>
     <string name="wallet_status_title">Wallet status:</string>
     <string name="wallet_status_activated">Activated</string>
     <string name="wallet_status_not_activated">Not Activated</string>

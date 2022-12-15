@@ -7,7 +7,7 @@ internal open class GariResponse<Data>(
     val code: Int? = null,
 
     @SerializedName("error")
-    val error: Int? = null,
+    val error: String? = null,
 
     @SerializedName("data")
     val data: Data? = null
