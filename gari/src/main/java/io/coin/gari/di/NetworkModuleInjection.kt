@@ -5,20 +5,18 @@ import io.coin.gari.network.service.GariNetworkService
 
 internal object NetworkModuleInjection {
 
-    val gariNetworkService: GariNetworkService by lazy {
-        GariNetworkService(
-            networkClient = providerNetworkClient()
-        )
-    }
-
-    fun providerNetworkClient(): NetworkClient {
-        return NetworkClient.Builder()
+    private val networkClient: NetworkClient by lazy {
+        NetworkClient.Builder()
             .build()
     }
 
-    fun provideGariNetworkService(networkClient: NetworkClient): GariNetworkService {
-        return GariNetworkService(
+    val gariNetworkService: GariNetworkService by lazy {
+        GariNetworkService(
             networkClient = networkClient
         )
+    }
+
+    fun setLogsEnabled(enable: Boolean) {
+        networkClient.setLogsEnabled(enable)
     }
 }

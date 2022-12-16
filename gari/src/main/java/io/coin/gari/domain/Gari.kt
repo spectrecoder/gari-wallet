@@ -6,7 +6,6 @@ import io.coin.gari.di.UseCaseModuleInjection
 import io.coin.gari.domain.entity.GariWallet
 import io.coin.gari.domain.entity.GariWalletState
 import io.coin.gari.domain.wallet.WalletKeyManager
-import io.coin.gari.network.core.NetworkClient
 import java8.util.concurrent.CompletableFuture
 
 object Gari {
@@ -17,9 +16,6 @@ object Gari {
     private val createWalletUseCase = UseCaseModuleInjection.createWalletUseCase
     private val requestAirdropUseCase = UseCaseModuleInjection.requestAirdropUseCase
 
-    private val networkClient: NetworkClient = NetworkModuleInjection
-        .providerNetworkClient()
-
     fun initialize(clientId: String) {
         this.clientId = clientId
     }
@@ -29,7 +25,7 @@ object Gari {
     }
 
     fun setLogsEnabled(enable: Boolean) {
-        networkClient.setLogsEnabled(enable)
+        NetworkModuleInjection.setLogsEnabled(enable)
     }
 
     fun getWalletState(token: String): GariWalletState {
@@ -44,7 +40,7 @@ object Gari {
         token: String
     ): CompletableFuture<Result<GariWallet>> {
         return keyManager.getPrivateKey(token)
-            .thenApply { key ->
+            .thenApplyAsync { key ->
                 createWalletUseCase.createWallet(
                     gariClientId = clientId,
                     token = token,
