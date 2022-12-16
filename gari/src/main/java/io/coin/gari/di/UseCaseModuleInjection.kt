@@ -1,6 +1,7 @@
 package io.coin.gari.di
 
 import io.coin.gari.domain.base64.AndroidBase64Util
+import io.coin.gari.domain.usecase.CreateWalletUseCase
 import io.coin.gari.domain.usecase.GetWalletDetailsUseCase
 import io.coin.gari.domain.usecase.RequestAirdropUseCase
 
@@ -16,6 +17,12 @@ internal object UseCaseModuleInjection {
         RequestAirdropUseCase(
             gariWalletRepository = DataModuleInjection.gariWalletRepository,
             base64Util = AndroidBase64Util()
+        )
+    }
+
+    val createWalletUseCase: CreateWalletUseCase by lazy {
+        CreateWalletUseCase(
+            gariWalletRepository = DataModuleInjection.gariWalletRepository
         )
     }
 }

@@ -1,11 +1,12 @@
-package io.coin.gari.ui
+package io.coin.gari.ui.web3
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import io.coin.gari.domain.web3auth.Web3AuthManager
-import io.coin.gari.domain.web3auth.Web3AuthManagerImpl
+import io.coin.gari.domain.web3.Web3AuthManager
+import io.coin.gari.domain.web3.Web3AuthManagerImpl
+import io.coin.gari.exceptions.Web3AuthorizeException
 
 class Web3LoginActivity : AppCompatActivity() {
 
@@ -27,9 +28,9 @@ class Web3LoginActivity : AppCompatActivity() {
         web3AuthManager.login(jwtToken)
             .whenComplete { privateKey, error ->
                 if (error != null || privateKey == null) {
-                    cancelLoginRequest()
+                    completeLoginFailure(error ?: Web3AuthorizeException("Undefined web3 error"))
                 } else {
-                    completeLogin(privateKey)
+                    completeLoginSuccess(privateKey)
                 }
             }
     }
@@ -45,9 +46,16 @@ class Web3LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun completeLogin(privateKey: ByteArray) {
+    private fun completeLoginSuccess(privateKey: ByteArray) {
         val resultIntent = Intent()
-        resultIntent.putExtra(WALLET_KEY, privateKey)
+        resultIntent.putExtra(WALLET_KEY_RESULT, WalletKeyResult.Success(privateKey))
+        setResult(RESULT_OK, resultIntent)
+        finish()
+    }
+
+    private fun completeLoginFailure(error: Throwable) {
+        val resultIntent = Intent()
+        resultIntent.putExtra(WALLET_KEY_RESULT, WalletKeyResult.Failure)
         setResult(RESULT_OK, resultIntent)
         finish()
     }
@@ -55,15 +63,14 @@ class Web3LoginActivity : AppCompatActivity() {
     companion object {
 
         private const val ARG_USER_TOKEN = "ARG_USER_TOKEN"
-        const val WALLET_KEY = "WALLET_KEY"
+        internal const val WALLET_KEY_RESULT = "WALLET_KEY_RESULT"
 
-        fun buildIntent(context: Context, token: String): Intent {
-            return Intent(context, Web3LoginActivity::class.java).also {
-                it.putExtra(
-                    ARG_USER_TOKEN,
-                    token
-                )
-            }
+        fun buildIntent(
+            context: Context,
+            token: String
+        ): Intent {
+            return Intent(context, Web3LoginActivity::class.java)
+                .also { it.putExtra(ARG_USER_TOKEN, token) }
         }
     }
 }

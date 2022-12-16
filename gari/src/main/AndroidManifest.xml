@@ -6,10 +6,11 @@
     <application>
 
         <activity
-            android:name=".ui.Web3LoginActivity"
+            android:name=".ui.web3.Web3LoginActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeGari">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -17,8 +18,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:scheme="io.coin.gari" />
+                <data android:scheme="io.coin.gari" />
             </intent-filter>
 
         </activity>

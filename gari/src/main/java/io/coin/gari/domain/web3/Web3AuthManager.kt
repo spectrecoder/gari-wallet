@@ -1,4 +1,4 @@
-package io.coin.gari.domain.web3auth
+package io.coin.gari.domain.web3
 
 import android.content.Context
 import android.content.Intent

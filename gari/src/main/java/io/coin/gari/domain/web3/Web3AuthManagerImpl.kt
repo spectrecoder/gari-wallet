@@ -1,11 +1,10 @@
-package io.coin.gari.domain.web3auth
+package io.coin.gari.domain.web3
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.web3auth.core.Web3Auth
 import com.web3auth.core.types.*
-import io.coin.gari.R
 import io.coin.gari.exceptions.Web3AuthorizeException
 import io.coin.gari.utils.decodeHex
 import java8.util.concurrent.CompletableFuture
@@ -86,7 +85,8 @@ class Web3AuthManagerImpl : Web3AuthManager {
             } catch (error: Throwable) {
                 resultOutput.completeExceptionally(
                     Web3AuthorizeException(
-                        "Unable to decode ed25519PrivateKey", error
+                        "Unable to decode ed25519PrivateKey",
+                        error
                     )
                 )
                 return
