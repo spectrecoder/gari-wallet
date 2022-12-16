@@ -70,7 +70,7 @@ class WalletDetailsActivity : AppCompatActivity() {
     }
 
     private fun activateWallet() {
-        walletKeyManager.getPrivateKey(this, web3AuthToken)
+        viewModel.registerWallet(walletKeyManager)
     }
 
     private inner class PageClickListener : View.OnClickListener {

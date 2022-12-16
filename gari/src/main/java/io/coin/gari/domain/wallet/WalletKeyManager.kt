@@ -19,7 +19,7 @@ class WalletKeyManager internal constructor(
         handleResult(result)
     }
 
-    fun getPrivateKey(context: Context, token: String): CompletableFuture<ByteArray> {
+    fun getPrivateKey(token: String): CompletableFuture<ByteArray> {
         web3AuthLauncher.launch(token)
 
         return CompletableFuture<ByteArray>()
