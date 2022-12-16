@@ -19,7 +19,6 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait">
 
             <intent-filter>
@@ -41,7 +40,6 @@
         <activity
             android:name=".ui.wallet.details.WalletDetailsActivity"
             android:exported="true"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
     </application>

@@ -16,19 +16,17 @@ class Web3AuthManagerImpl : Web3AuthManager {
     private var loginResult: CompletableFuture<ByteArray>? = null
 
     override fun onCreate(context: Context, intent: Intent?) {
-        val clientId = context.getString(R.string.web3auth_project_id)
-
         web3Auth = Web3Auth(
             Web3AuthOptions(
                 context = context,
-                clientId = clientId,
+                clientId = WEB3AUTH_CLIENT_ID,
                 network = Web3Auth.Network.TESTNET,
-                redirectUrl = Uri.parse("${context.packageName}://auth"),
+                redirectUrl = Uri.parse(REDIRECT_URL),
                 loginConfig = hashMapOf(
                     "jwt" to LoginConfigItem(
-                        clientId = clientId,
-                        verifier = "pubg-game-verifier",
-                        name = "pubg-game-verifier",
+                        clientId = WEB3AUTH_CLIENT_ID,
+                        verifier = WEB3AUTH_VERIFIER,
+                        name = WEB3AUTH_VERIFIER_TITLE,
                         typeOfLogin = TypeOfLogin.JWT
                     )
                 )
@@ -51,10 +49,12 @@ class Web3AuthManagerImpl : Web3AuthManager {
 
         web3Auth.login(
             LoginParams(
-                loginProvider = Provider.JWT, extraLoginOptions = ExtraLoginOptions(
-                    verifierIdField = "uid",
+                loginProvider = Provider.JWT,
+                extraLoginOptions = ExtraLoginOptions(
+                    verifierIdField = USER_VERIFIER_ID_FIELD,
                     id_token = jwtToken,
-                    domain = "https://demo-gari-sdk.vercel.app/"
+                    domain = TOKEN_VERIFIER_DOMAIN,
+                    redirect_uri = REDIRECT_URL
                 )
             )
         ).whenComplete { loginResponse, error ->
@@ -94,5 +94,16 @@ class Web3AuthManagerImpl : Web3AuthManager {
 
             resultOutput.complete(decodedKey)
         }
+    }
+
+    private companion object {
+
+        private const val USER_VERIFIER_ID_FIELD = "uid"
+        private const val WEB3AUTH_CLIENT_ID =
+            "BAGatRxirFvKTvUNeB_urIsfZsXUEh-JUcWSi432p_5pewX_0wEvYuGQBe1IjKI35lyrqTV5qDgFznmj6N7fdvY"
+        private const val REDIRECT_URL = "io.coin.gari://auth"
+        private const val WEB3AUTH_VERIFIER = "pubg-game-verifier"
+        private const val WEB3AUTH_VERIFIER_TITLE = "Pubg game verifier"
+        private const val TOKEN_VERIFIER_DOMAIN = "https://demo-gari-sdk.vercel.app"
     }
 }

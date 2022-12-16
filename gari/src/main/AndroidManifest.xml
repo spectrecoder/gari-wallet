@@ -8,6 +8,7 @@
         <activity
             android:name=".ui.Web3LoginActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
 
             <intent-filter>
@@ -17,8 +18,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:path="/auth"
-                    android:scheme="${applicationId}" />
+                    android:scheme="io.coin.gari" />
             </intent-filter>
 
         </activity>

@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import io.coin.gari.domain.WalletPrivateKeyExtractor
 import io.coin.gari.domain.entity.GariWalletState
 import io.gari.sample.R
 import io.gari.sample.databinding.ActivityWalletDetailsBinding
@@ -20,6 +21,7 @@ class WalletDetailsActivity : AppCompatActivity() {
             ?: throw IllegalStateException("Forget to pass web3 auth token?")
 
     private lateinit var screenBinding: ActivityWalletDetailsBinding
+    private val web3KeyExtractor = WalletPrivateKeyExtractor(this)
 
     private val viewModel: WalletDetailsViewModel by viewModel { parametersOf(web3AuthToken) }
 
@@ -67,7 +69,7 @@ class WalletDetailsActivity : AppCompatActivity() {
     }
 
     private fun activateWallet() {
-
+        web3KeyExtractor.getPrivateKey(this, web3AuthToken)
     }
 
     private inner class PageClickListener : View.OnClickListener {

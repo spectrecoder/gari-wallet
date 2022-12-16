@@ -48,11 +48,11 @@ class Web3LoginActivity : AppCompatActivity() {
     private fun completeLogin(privateKey: ByteArray) {
         val resultIntent = Intent()
         resultIntent.putExtra(WALLET_KEY, privateKey)
-        setResult(RESULT_OK)
+        setResult(RESULT_OK, resultIntent)
         finish()
     }
 
-    private companion object {
+    companion object {
 
         private const val ARG_USER_TOKEN = "ARG_USER_TOKEN"
         const val WALLET_KEY = "WALLET_KEY"
