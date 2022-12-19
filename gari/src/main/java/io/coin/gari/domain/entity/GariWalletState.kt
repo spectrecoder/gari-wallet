@@ -2,7 +2,7 @@ package io.coin.gari.domain.entity
 
 sealed class GariWalletState {
 
-    class Activated(val pubKey: String) : GariWalletState()
+    class Activated(val pubKey: String, val balance: String) : GariWalletState()
 
     object NotExist : GariWalletState()
 

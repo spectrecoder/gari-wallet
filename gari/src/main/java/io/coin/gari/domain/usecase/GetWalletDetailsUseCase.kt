@@ -29,6 +29,9 @@ internal class GetWalletDetailsUseCase(
             }
         }
 
-        return GariWalletState.Activated(gariWallet.publicKey)
+        return GariWalletState.Activated(
+            pubKey = gariWallet.publicKey,
+            balance = gariWallet.balance
+        )
     }
 }

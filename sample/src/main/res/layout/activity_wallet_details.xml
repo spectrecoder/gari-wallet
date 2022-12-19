@@ -58,7 +58,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvWalletStatusTitle"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvActivatedTitle"
@@ -70,15 +70,26 @@
                     app:drawableStartCompat="@drawable/ic_checkmark_green" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPubKey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvActivatedTitle"
                     android:layout_marginTop="16dp"
                     android:drawablePadding="4dp"
                     android:gravity="center_vertical"
-                    android:text="@{viewModel.publicKey}"
                     app:drawableStartCompat="@drawable/ic_key"
                     tools:text="14214SFafasf2412412sfaf31452153153215142414214fasf2144214" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBalance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvPubKey"
+                    android:layout_marginTop="16dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    app:drawableStartCompat="@drawable/ic_balance"
+                    tools:text="0.0" />
 
             </RelativeLayout>
 
@@ -124,7 +135,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvWalletStatusTitle"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvWalletActivatedTitle"

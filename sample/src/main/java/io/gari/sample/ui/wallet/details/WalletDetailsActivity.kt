@@ -53,6 +53,8 @@ class WalletDetailsActivity : AppCompatActivity() {
         screenBinding.containerWalletNotActivated.isVisible = false
         screenBinding.containerWalletActivated.isVisible = true
         screenBinding.containerCheckFailure.isVisible = false
+        screenBinding.tvBalance.text = state.balance
+        screenBinding.tvPubKey.text = state.pubKey
     }
 
     private fun renderStateNotExist() {

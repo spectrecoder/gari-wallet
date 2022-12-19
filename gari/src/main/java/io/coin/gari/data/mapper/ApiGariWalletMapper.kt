@@ -7,9 +7,11 @@ internal class ApiGariWalletMapper : AbstractApiMapper<ApiGariWallet, GariWallet
 
     override fun from(model: ApiGariWallet): GariWallet {
         val publicKey = requireNotEmpty(model.publicKey, model::publicKey)
+        val balance = requireNotEmpty(model.balance, model::balance)
 
         return GariWallet(
-            publicKey = publicKey
+            publicKey = publicKey,
+            balance = balance
         )
     }
 }

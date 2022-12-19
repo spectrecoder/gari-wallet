@@ -1,7 +1,6 @@
 package io.gari.sample.ui.wallet.details
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.coin.gari.domain.Gari
@@ -15,9 +14,6 @@ class WalletDetailsViewModel(
 ) : ViewModel() {
 
     val walletState = MutableLiveData<GariWalletState>()
-    val publicKey = Transformations.map(walletState) {
-        (it as? GariWalletState.Activated)?.pubKey
-    }
 
     init {
         loadWalletDetails()
@@ -35,6 +31,7 @@ class WalletDetailsViewModel(
             Gari.createWallet(keyManager, web3AuthToken)
                 .whenComplete { walletResult, error ->
                     val wallet = walletResult.getOrNull()
+
                     if (walletResult.isFailure
                         || wallet == null
                         || error != null
@@ -45,7 +42,12 @@ class WalletDetailsViewModel(
                             )
                         )
                     } else {
-                        walletState.postValue(GariWalletState.Activated(wallet.publicKey))
+                        walletState.postValue(
+                            GariWalletState.Activated(
+                                wallet.publicKey,
+                                wallet.balance
+                            )
+                        )
                     }
                 }
         }
