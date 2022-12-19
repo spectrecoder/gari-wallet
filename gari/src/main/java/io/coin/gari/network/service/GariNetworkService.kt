@@ -91,18 +91,18 @@ internal class GariNetworkService(
                 Api.Param.AIRDROP_AMOUNT to airdropAmount,
             )
 
-            val response = networkClient.post<GariResponse<ApiEncodedTransaction>>(
+            val response = networkClient.post<GariResponse<String>>(
                 gariClientId = gariClientId,
                 token = token,
                 path = Api.Path.AIRDROP_GET_ENCODED_TRANSACTION,
                 params = params,
                 responseType = TypeToken.getParameterized(
                     GariResponse::class.java,
-                    ApiEncodedTransaction::class.java
+                    String::class.java
                 ).type
             )
 
-            val encodedTransaction = response.data?.encodedTransaction
+            val encodedTransaction = response.data
 
             if (encodedTransaction.isNullOrEmpty()) {
                 return Result.failure(InvalidResponseBodyException())

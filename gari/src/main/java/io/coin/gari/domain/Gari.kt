@@ -50,17 +50,18 @@ object Gari {
     }
 
     fun getAirDrop(
+        keyManager: WalletKeyManager,
         token: String,
-        pubKey: String,
-        privateKey: ByteArray,
         amount: String
-    ): Result<Unit> {
-        return requestAirdropUseCase.requestAirdrop(
-            gariClientId = clientId,
-            token = token,
-            pubKey = pubKey,
-            airdropAmount = amount,
-            privateKey = privateKey
-        )
+    ): CompletableFuture<Result<Unit>> {
+        return keyManager.getPrivateKey(token)
+            .thenApplyAsync { key ->
+                requestAirdropUseCase.requestAirdrop(
+                    gariClientId = clientId,
+                    token = token,
+                    airdropAmount = amount,
+                    privateKey = key
+                )
+            }
     }
 }

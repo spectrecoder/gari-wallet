@@ -75,11 +75,16 @@ class WalletDetailsActivity : AppCompatActivity() {
         viewModel.registerWallet(walletKeyManager)
     }
 
+    private fun requestAirdrop() {
+        viewModel.requestAirdrop(walletKeyManager)
+    }
+
     private inner class PageClickListener : View.OnClickListener {
 
         override fun onClick(view: View) {
             when (view.id) {
                 R.id.btnActivateWallet -> activateWallet()
+                R.id.btnRequestAirdrop -> requestAirdrop()
             }
         }
     }

@@ -34,9 +34,9 @@ class Web3AuthManagerImpl : Web3AuthManager {
 
         web3Auth.setResultUrl(intent?.data)
 
-        web3Auth.sessionResponse().whenComplete { loginResponse, error ->
+        /*web3Auth.sessionResponse().whenComplete { loginResponse, error ->
             loginResult?.let { handleResult(loginResponse, error, it) }
-        }
+        }*/
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -57,6 +57,11 @@ class Web3AuthManagerImpl : Web3AuthManager {
                 )
             )
         ).whenComplete { loginResponse, error ->
+            /*web3Auth.logout()
+                .whenComplete { _, logoutError ->
+                    handleResult(loginResponse, error, resultOutput)
+                }*/
+
             handleResult(loginResponse, error, resultOutput)
         }
 

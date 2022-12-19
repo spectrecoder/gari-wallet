@@ -14,10 +14,15 @@ internal class RequestAirdropUseCase(
     fun requestAirdrop(
         gariClientId: String,
         token: String,
-        pubKey: String,
         privateKey: ByteArray,
         airdropAmount: String
     ): Result<Unit> {
+        val pubKey = try {
+            KeyPair.fromSecretKey(privateKey).publicKey.toBase58()
+        } catch (error: Throwable) {
+            return Result.failure(error)
+        }
+
         val encodedTransactionResult = gariWalletRepository.getEncodedAirdropTransaction(
             gariClientId = gariClientId,
             token = token,
