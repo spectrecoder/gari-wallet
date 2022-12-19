@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken
 import io.coin.gari.exceptions.InvalidResponseBodyException
 import io.coin.gari.exceptions.WalletNotRegisteredException
 import io.coin.gari.network.Api
+import io.coin.gari.network.core.HttpCode
 import io.coin.gari.network.core.NetworkClient
 import io.coin.gari.network.entity.ApiEncodedTransaction
 import io.coin.gari.network.entity.ApiGariWallet
@@ -26,11 +27,12 @@ internal class GariNetworkService(
                 responseType = TypeToken.getParameterized(WalletDetailsResponse::class.java).type
             )
 
-            val userExist = apiWalletResponse.userExist
-                ?: throw InvalidResponseBodyException()
-
-            if (!userExist) {
-                throw WalletNotRegisteredException()
+            if (apiWalletResponse.code != HttpCode.SUCCESS.code) {
+                if (apiWalletResponse.userExist == false) {
+                    throw WalletNotRegisteredException()
+                } else {
+                    throw InvalidResponseBodyException()
+                }
             }
 
             val apiWallet = apiWalletResponse.data
@@ -52,16 +54,26 @@ internal class GariNetworkService(
                 Api.Param.PUBLIC_KEY to pubKey
             )
 
-            val apiWalletResponse = networkClient.post(
+            val apiWalletResponse = networkClient.post<GariResponse<ApiGariWallet>>(
                 gariClientId = gariClientId,
                 token = token,
                 path = Api.Path.WALLET_CREATE,
                 params = params,
-                responseClass = WalletDetailsResponse::class.java
+                responseType = TypeToken.getParameterized(
+                    GariResponse::class.java,
+                    ApiGariWallet::class.java
+                ).type
             )
 
+            val apiWallet = apiWalletResponse.data
 
-            Result.failure(InvalidResponseBodyException())
+            if (apiWalletResponse.code != HttpCode.SUCCESS.code
+                || apiWallet == null
+            ) {
+                throw InvalidResponseBodyException()
+            }
+
+            Result.success(apiWallet)
         } catch (error: Throwable) {
             Result.failure(error)
         }

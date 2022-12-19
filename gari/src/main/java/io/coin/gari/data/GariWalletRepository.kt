@@ -29,11 +29,15 @@ internal class GariWalletRepository(
         token: String,
         pubKey: String
     ): Result<GariWallet> {
-        return gariNetworkService.createWallet(
-            gariClientId = gariClientId,
-            token = token,
-            pubKey = pubKey
-        ).map { GariWallet("") }
+        return try {
+            gariNetworkService.createWallet(
+                gariClientId = gariClientId,
+                token = token,
+                pubKey = pubKey
+            ).map { apiGariWalletMapper.from(it) }
+        } catch (error: Throwable) {
+            Result.failure(error)
+        }
     }
 
     fun getEncodedAirdropTransaction(

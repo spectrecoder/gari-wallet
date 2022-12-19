@@ -39,7 +39,11 @@ class WalletDetailsViewModel(
                         || wallet == null
                         || error != null
                     ) {
-                        // todo: error
+                        walletState.postValue(
+                            GariWalletState.Error(
+                                walletResult.exceptionOrNull() ?: error
+                            )
+                        )
                     } else {
                         walletState.postValue(GariWalletState.Activated(wallet.publicKey))
                     }
