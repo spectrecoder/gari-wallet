@@ -27,18 +27,22 @@ internal class GariNetworkService(
                 responseType = TypeToken.getParameterized(WalletDetailsResponse::class.java).type
             )
 
-            if (apiWalletResponse.code != HttpCode.SUCCESS.code) {
-                if (apiWalletResponse.userExist == false) {
+            when (apiWalletResponse.code) {
+                HttpCode.NOT_FOUND.code -> {
                     throw WalletNotRegisteredException()
-                } else {
+                }
+
+                HttpCode.SUCCESS.code -> {
+                    val apiWallet = apiWalletResponse.data
+                        ?: throw InvalidResponseBodyException()
+
+                    Result.success(apiWallet)
+                }
+
+                else -> {
                     throw InvalidResponseBodyException()
                 }
             }
-
-            val apiWallet = apiWalletResponse.data
-                ?: throw InvalidResponseBodyException()
-
-            Result.success(apiWallet)
         } catch (error: Throwable) {
             Result.failure(error)
         }
