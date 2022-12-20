@@ -1,6 +1,5 @@
 package io.coin.gari.domain.wallet
 
-import android.content.Context
 import androidx.activity.result.ActivityResultCaller
 import io.coin.gari.exceptions.Web3AuthorizeException
 import io.coin.gari.ui.web3.WalletKeyResult

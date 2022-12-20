@@ -12,10 +12,10 @@ internal object Api {
     }
 
     object Path {
-        const val WALLET_DETAILS = "/Appwallet/getWalletDetails"
-        const val WALLET_CREATE = "/Appwallet/newUserWallet"
-        const val AIRDROP_GET_ENCODED_TRANSACTION = "/Appwallet/getEncodeTransactionAirdrop"
-        const val AIRDROP_SEND_SIGNED_TRANSACTION = "/Appwallet/airdrop"
+        const val WALLET_DETAILS = "/appwallet/get-wallet-details"
+        const val WALLET_CREATE = "/appwallet/new-user-wallet"
+        const val AIRDROP_GET_ENCODED_TRANSACTION = "/appwallet/get-encode-transaction-airdrop"
+        const val AIRDROP_SEND_SIGNED_TRANSACTION = "/appwallet/airdrop"
     }
 
     object Param {

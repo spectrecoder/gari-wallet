@@ -32,7 +32,7 @@ class Web3AuthManagerImpl : Web3AuthManager {
             )
         )
 
-        web3Auth.setResultUrl(intent?.data)
+//        web3Auth.setResultUrl(intent?.data)
 
         /*web3Auth.sessionResponse().whenComplete { loginResponse, error ->
             loginResult?.let { handleResult(loginResponse, error, it) }
@@ -53,7 +53,6 @@ class Web3AuthManagerImpl : Web3AuthManager {
                     verifierIdField = USER_VERIFIER_ID_FIELD,
                     id_token = jwtToken,
                     domain = TOKEN_VERIFIER_DOMAIN,
-                    redirect_uri = REDIRECT_URL
                 )
             )
         ).whenComplete { loginResponse, error ->
