@@ -10,6 +10,7 @@ object KoinLoader {
         val moduleList = loginModule +
                 walletModule +
                 airdropModule +
+                transactionsModule +
                 networkModule
 
         startKoin {

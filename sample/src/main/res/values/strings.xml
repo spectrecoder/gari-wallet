@@ -15,6 +15,7 @@
     <string name="wallet_status_error">Oops! There was an error!</string>
     <string name="wallet_status_activate">Activate</string>
     <string name="wallet_status_request_airdrop">Airdrop</string>
+    <string name="wallet_status_send_transaction">Send transaction</string>
     <string name="wallet_status_airdrop_amount">Airdrop amount</string>
     <string name="wallet_status_airdrop_amount_empty">Enter amount!</string>
 
@@ -24,5 +25,12 @@
     <string name="airdrop_cta_button">Request airdrop</string>
     <string name="airdrop_repeat">Repeat airdrop?</string>
     <string name="airdrop_signature_title">Signature:</string>
+
+    <string name="send_transaction">Send transaction</string>
+    <string name="send_transaction_amount_hint">Amount</string>
+    <string name="send_transaction_destination_hint">Receiver public key</string>
+    <string name="send_transaction_cta_button">Send</string>
+    <string name="send_transaction_missing_receiver">Enter receiver PubKey!</string>
+    <string name="send_transaction_missing_amount">Enter amount!</string>
 
 </resources>

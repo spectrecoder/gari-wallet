@@ -47,6 +47,11 @@
             android:exported="true"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.wallet.transactions.send.SendTransactionActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

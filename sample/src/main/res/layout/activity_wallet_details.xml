@@ -101,6 +101,15 @@
                     android:onClick="@{() -> clickListener.onClick(btnRequestAirdrop)}"
                     android:text="@string/wallet_status_request_airdrop" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSendTransaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnRequestAirdrop"
+                    android:layout_marginTop="12dp"
+                    android:onClick="@{() -> clickListener.onClick(btnSendTransaction)}"
+                    android:text="@string/wallet_status_send_transaction" />
+
             </RelativeLayout>
 
             <RelativeLayout

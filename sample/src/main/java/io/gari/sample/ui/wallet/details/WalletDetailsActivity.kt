@@ -13,6 +13,7 @@ import io.coin.gari.domain.entity.GariWalletState
 import io.gari.sample.R
 import io.gari.sample.databinding.ActivityWalletDetailsBinding
 import io.gari.sample.ui.wallet.airdrop.AirdropActivity
+import io.gari.sample.ui.wallet.transactions.send.SendTransactionActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -93,12 +94,22 @@ class WalletDetailsActivity : AppCompatActivity() {
         )
     }
 
+    private fun sendTransaction() {
+        startActivity(
+            SendTransactionActivity.buildIntent(
+                context = this,
+                token = web3AuthToken
+            )
+        )
+    }
+
     private inner class PageClickListener : View.OnClickListener {
 
         override fun onClick(view: View) {
             when (view.id) {
                 R.id.btnActivateWallet -> activateWallet()
                 R.id.btnRequestAirdrop -> requestAirdrop()
+                R.id.btnSendTransaction -> sendTransaction()
             }
         }
     }
