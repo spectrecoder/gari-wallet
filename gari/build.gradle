@@ -11,7 +11,7 @@ android {
     compileSdk appConfig.compileSdk
 
     defaultConfig {
-        minSdk 21
+        minSdk appConfig.minSdk
         targetSdk appConfig.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

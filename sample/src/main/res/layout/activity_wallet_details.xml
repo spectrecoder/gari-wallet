@@ -92,42 +92,14 @@
                     app:drawableStartCompat="@drawable/ic_balance"
                     tools:text="0.0" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRequestAirdrop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvBalance"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/shape_airdrop_border"
-                    android:orientation="vertical"
-                    android:paddingStart="16dp"
-                    android:paddingTop="12dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="12dp">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputUserId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/wallet_status_airdrop_amount"
-                        bind:inputError="@{viewModel.airdropAmountError}">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"
-                            android:text="@={viewModel.airdropAmount}" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnRequestAirdrop"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:onClick="@{() -> clickListener.onClick(btnRequestAirdrop)}"
-                        android:text="@string/wallet_status_request_airdrop" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    android:layout_marginTop="12dp"
+                    android:onClick="@{() -> clickListener.onClick(btnRequestAirdrop)}"
+                    android:text="@string/wallet_status_request_airdrop" />
 
             </RelativeLayout>
 

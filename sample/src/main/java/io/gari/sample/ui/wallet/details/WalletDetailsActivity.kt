@@ -12,6 +12,7 @@ import io.coin.gari.domain.wallet.WalletKeyManager
 import io.coin.gari.domain.entity.GariWalletState
 import io.gari.sample.R
 import io.gari.sample.databinding.ActivityWalletDetailsBinding
+import io.gari.sample.ui.wallet.airdrop.AirdropActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -76,7 +77,20 @@ class WalletDetailsActivity : AppCompatActivity() {
     }
 
     private fun requestAirdrop() {
-        viewModel.requestAirdrop(walletKeyManager)
+        val walletState = viewModel.walletState.value
+
+        if (walletState !is GariWalletState.Activated) {
+            // todo: wallet has not been activated, requires activating first
+            return
+        }
+
+        startActivity(
+            AirdropActivity.buildIntent(
+                context = this,
+                token = web3AuthToken,
+                publicKey = walletState.pubKey
+            )
+        )
     }
 
     private inner class PageClickListener : View.OnClickListener {

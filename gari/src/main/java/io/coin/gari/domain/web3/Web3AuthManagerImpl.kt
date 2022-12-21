@@ -35,7 +35,7 @@ class Web3AuthManagerImpl : Web3AuthManager {
 //        web3Auth.setResultUrl(intent?.data)
 
         /*web3Auth.sessionResponse().whenComplete { loginResponse, error ->
-            loginResult?.let { handleResult(loginResponse, error, it) }
+            loginResult?.let { handleResult(loginResponse?.ed25519PrivKey, error, it) }
         }*/
     }
 
@@ -48,7 +48,7 @@ class Web3AuthManagerImpl : Web3AuthManager {
 
         web3Auth.login(
             LoginParams(
-                loginProvider = Provider.JWT,
+                loginProvider = Provider.GOOGLE,
                 extraLoginOptions = ExtraLoginOptions(
                     verifierIdField = USER_VERIFIER_ID_FIELD,
                     id_token = jwtToken,
@@ -56,12 +56,8 @@ class Web3AuthManagerImpl : Web3AuthManager {
                 )
             )
         ).whenComplete { loginResponse, error ->
-            /*web3Auth.logout()
-                .whenComplete { _, logoutError ->
-                    handleResult(loginResponse, error, resultOutput)
-                }*/
-
-            handleResult(loginResponse, error, resultOutput)
+            val ed25519PrivKey = loginResponse.ed25519PrivKey
+            handleResult(ed25519PrivKey, error, resultOutput)
         }
 
         return resultOutput.also {
@@ -70,22 +66,15 @@ class Web3AuthManagerImpl : Web3AuthManager {
     }
 
     private fun handleResult(
-        loginResponse: Web3AuthResponse?,
+        ed25519PrivKey: String?,
         error: Throwable?,
         resultOutput: CompletableFuture<ByteArray>
     ) {
-        if (error != null || loginResponse == null) {
+        if (error != null || ed25519PrivKey.isNullOrEmpty()) {
             resultOutput.completeExceptionally(Web3AuthorizeException(error))
         } else {
-            val ed25519PrivateKey = loginResponse.ed25519PrivKey
-
-            if (ed25519PrivateKey.isNullOrEmpty()) {
-                resultOutput.completeExceptionally(Web3AuthorizeException("Missing private key"))
-                return
-            }
-
             val decodedKey = try {
-                ed25519PrivateKey.decodeHex()
+                ed25519PrivKey.decodeHex()
             } catch (error: Throwable) {
                 resultOutput.completeExceptionally(
                     Web3AuthorizeException(
@@ -107,7 +96,7 @@ class Web3AuthManagerImpl : Web3AuthManager {
             "BAGatRxirFvKTvUNeB_urIsfZsXUEh-JUcWSi432p_5pewX_0wEvYuGQBe1IjKI35lyrqTV5qDgFznmj6N7fdvY"
         private const val REDIRECT_URL = "io.coin.gari://auth"
         private const val WEB3AUTH_VERIFIER = "pubg-game-verifier"
-        private const val WEB3AUTH_VERIFIER_TITLE = "Pubg game verifier"
+        private const val WEB3AUTH_VERIFIER_TITLE = "Demo React POC"
         private const val TOKEN_VERIFIER_DOMAIN = "https://demo-gari-sdk.vercel.app"
     }
 }

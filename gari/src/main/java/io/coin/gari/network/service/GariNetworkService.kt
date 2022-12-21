@@ -124,7 +124,7 @@ internal class GariNetworkService(
         pubKey: String,
         airdropAmount: String,
         encodedTransaction: String,
-    ): Result<Unit> {
+    ): Result<String> {
         return try {
             val params = hashMapOf(
                 Api.Param.PUBLIC_KEY to pubKey,
@@ -132,24 +132,24 @@ internal class GariNetworkService(
                 Api.Param.ENCODED_TRANSACTION to encodedTransaction,
             )
 
-            val response = networkClient.post<GariResponse<ApiEncodedTransaction>>(
+            val response = networkClient.post<GariResponse<String>>(
                 gariClientId = gariClientId,
                 token = token,
                 path = Api.Path.AIRDROP_SEND_SIGNED_TRANSACTION,
                 params = params,
                 responseType = TypeToken.getParameterized(
                     GariResponse::class.java,
-                    ApiEncodedTransaction::class.java
+                    String::class.java
                 ).type
             )
 
-            val encodedTransaction = response.data?.encodedTransaction
+            val transactionSignature = response.data
 
-            if (encodedTransaction.isNullOrEmpty()) {
-                return Result.failure(InvalidResponseBodyException())
+            if (transactionSignature.isNullOrEmpty()) {
+                return Result.failure(InvalidResponseBodyException("Missing airdrop transaction signature"))
             }
 
-            Result.success(Unit)
+            Result.success(transactionSignature)
         } catch (error: Throwable) {
             Result.failure(error)
         }

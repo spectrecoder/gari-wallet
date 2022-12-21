@@ -14,19 +14,14 @@ internal class RequestAirdropUseCase(
     fun requestAirdrop(
         gariClientId: String,
         token: String,
-        privateKey: ByteArray,
+        destinationPublicKey: String,
+        sponsorPrivateKey: ByteArray,
         airdropAmount: String
-    ): Result<Unit> {
-        val pubKey = try {
-            KeyPair.fromSecretKey(privateKey).publicKey.toBase58()
-        } catch (error: Throwable) {
-            return Result.failure(error)
-        }
-
+    ): Result<String> {
         val encodedTransactionResult = gariWalletRepository.getEncodedAirdropTransaction(
             gariClientId = gariClientId,
             token = token,
-            pubKey = pubKey,
+            pubKey = destinationPublicKey,
             airdropAmount = airdropAmount
         )
 
@@ -41,7 +36,7 @@ internal class RequestAirdropUseCase(
         }
 
         val rawTransaction = base64Util.fromBase64(encodedTransaction)
-        val signer = KeyPair.fromSecretKey(privateKey)
+        val signer = KeyPair.fromSecretKey(sponsorPrivateKey)
 
         val transaction = Transaction.from(rawTransaction)
         transaction.partialSign(signer)
@@ -58,7 +53,7 @@ internal class RequestAirdropUseCase(
         return gariWalletRepository.sendSignedAirdropTransaction(
             gariClientId = gariClientId,
             token = token,
-            pubKey = pubKey,
+            pubKey = destinationPublicKey,
             airdropAmount = airdropAmount,
             encodedTransaction = encodedSignedTransaction
         )

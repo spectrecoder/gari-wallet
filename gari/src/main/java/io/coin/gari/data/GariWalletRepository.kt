@@ -60,7 +60,7 @@ internal class GariWalletRepository(
         pubKey: String,
         airdropAmount: String,
         encodedTransaction: String,
-    ): Result<Unit> {
+    ): Result<String> {
         return gariNetworkService.sendSignedAirdropTransaction(
             gariClientId = gariClientId,
             token = token,

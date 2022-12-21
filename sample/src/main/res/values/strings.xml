@@ -18,4 +18,9 @@
     <string name="wallet_status_airdrop_amount">Airdrop amount</string>
     <string name="wallet_status_airdrop_amount_empty">Enter amount!</string>
 
+    <string name="airdrop_actionbar">Airdrop</string>
+    <string name="airdrop_sponsor_hint">Sponsor private key (HEX)</string>
+    <string name="airdrop_sponsor_required">Private key (HEX) from which amount will be deducted</string>
+    <string name="airdrop_cta_button">Request airdrop</string>
+
 </resources>
