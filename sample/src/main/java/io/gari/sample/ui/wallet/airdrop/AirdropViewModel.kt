@@ -24,6 +24,12 @@ class AirdropViewModel(
 
     val isProcessing = MutableLiveData(false)
 
+    val viewState = MutableLiveData<AirdropViewState>(AirdropViewState.Ready)
+
+    fun repeatAirdrop() {
+        viewState.postValue(AirdropViewState.Ready)
+    }
+
     fun requestAirdrop() {
         val airdropAmount = airdropAmount.value
 
@@ -51,7 +57,8 @@ class AirdropViewModel(
                 amount = airdropAmount,
                 destinationPublicKey = publicKey,
                 sponsorPrivateKey = airdropSponsor.decodeHex()
-            ).onSuccess {
+            ).onSuccess { signature ->
+                viewState.postValue(AirdropViewState.Completed(signature))
                 isProcessing.postValue(false)
             }.onFailure {
                 isProcessing.postValue(false)

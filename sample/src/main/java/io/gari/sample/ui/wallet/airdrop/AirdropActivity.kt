@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import io.gari.sample.R
 import io.gari.sample.databinding.ActivityRequestAirdropBinding
@@ -33,6 +34,34 @@ class AirdropActivity : AppCompatActivity() {
         screenBinding.clickListener = PageClickListener()
         screenBinding.lifecycleOwner = this
         screenBinding.viewModel = viewModel
+
+        screenBinding.toolbarLogin.setNavigationOnClickListener {
+            finish()
+        }
+
+        viewModel.viewState.observe(this) { it?.let { renderViewState(it) } }
+    }
+
+    private fun renderViewState(state: AirdropViewState) {
+        when (state) {
+            is AirdropViewState.Ready -> renderAirdropForm()
+            is AirdropViewState.Completed -> renderAirdropResult(state.signature)
+        }
+    }
+
+    private fun renderAirdropForm() {
+        screenBinding.containerRepeatAirdrop.isVisible = false
+        screenBinding.btnRequestAirdrop.isVisible = true
+    }
+
+    private fun renderAirdropResult(signature: String) {
+        screenBinding.containerRepeatAirdrop.isVisible = true
+        screenBinding.btnRequestAirdrop.isVisible = false
+        screenBinding.tvAirdropSignature.text = signature
+    }
+
+    private fun repeatAirdrop() {
+        viewModel.repeatAirdrop()
     }
 
     private fun requestAirdrop() {
@@ -44,6 +73,7 @@ class AirdropActivity : AppCompatActivity() {
         override fun onClick(view: View) {
             when (view.id) {
                 R.id.btnRequestAirdrop -> requestAirdrop()
+                R.id.btnRepeatAirdrop -> repeatAirdrop()
             }
         }
     }

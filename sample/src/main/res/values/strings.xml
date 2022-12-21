@@ -22,5 +22,7 @@
     <string name="airdrop_sponsor_hint">Sponsor private key (HEX)</string>
     <string name="airdrop_sponsor_required">Private key (HEX) from which amount will be deducted</string>
     <string name="airdrop_cta_button">Request airdrop</string>
+    <string name="airdrop_repeat">Repeat airdrop?</string>
+    <string name="airdrop_signature_title">Signature:</string>
 
 </resources>

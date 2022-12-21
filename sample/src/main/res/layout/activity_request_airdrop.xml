@@ -34,6 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/ic_arrow_back"
                 app:title="@string/airdrop_actionbar"
                 app:titleTextColor="@color/white" />
 
@@ -82,6 +83,38 @@
                     android:layout_marginTop="12dp"
                     android:onClick="@{() -> clickListener.onClick(btnRequestAirdrop)}"
                     android:text="@string/airdrop_cta_button" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/containerRepeatAirdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/airdrop_signature_title"
+                        android:textColor="#333333"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAirdropSignature"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="#333333"
+                        tools:text="5KgajHX7Eqm5gk5mGPdSHd5ghvYCD1ARibcXBM4TKKNh3gfXenQ178SpeFb67DhawfwWvxbTUuFZHQS3zBUsCF2Q" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnRepeatAirdrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:onClick="@{() -> clickListener.onClick(btnRepeatAirdrop)}"
+                        android:text="@string/airdrop_repeat" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
