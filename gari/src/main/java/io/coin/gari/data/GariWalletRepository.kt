@@ -69,4 +69,18 @@ internal class GariWalletRepository(
             encodedTransaction = encodedTransaction
         )
     }
+
+    fun getEncodedTransaction(
+        gariClientId: String,
+        token: String,
+        receiverPublicKey: String,
+        transactionAmount: String,
+    ): Result<String> {
+        return gariNetworkService.getEncodedTransaction(
+            gariClientId = gariClientId,
+            token = token,
+            receiverPublicKey = receiverPublicKey,
+            transactionAmount = transactionAmount,
+        )
+    }
 }

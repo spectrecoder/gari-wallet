@@ -8,7 +8,8 @@ val transactionsModule = module {
 
     viewModel { (web3AuthToken: String) ->
         SendTransactionViewModel(
-            web3AuthToken = web3AuthToken
+            web3AuthToken = web3AuthToken,
+            demoRepository = get()
         )
     }
 }

@@ -15,6 +15,7 @@ object Gari {
     private val getWalletDetailsUseCase = UseCaseModuleInjection.getWalletDetailsUseCase
     private val createWalletUseCase = UseCaseModuleInjection.createWalletUseCase
     private val requestAirdropUseCase = UseCaseModuleInjection.requestAirdropUseCase
+    private val transferGariTokenUseCase = UseCaseModuleInjection.transferGariTokenUseCase
 
     fun initialize(clientId: String) {
         this.clientId = clientId
@@ -62,5 +63,23 @@ object Gari {
             destinationPublicKey = destinationPublicKey,
             sponsorPrivateKey = sponsorPrivateKey
         )
+    }
+
+    fun transferGariToken(
+        token: String,
+        keyManager: WalletKeyManager,
+        receiverPublicKey: String,
+        transactionAmount: String
+    ): CompletableFuture<Result<String>> {
+        return keyManager.getPrivateKey(token)
+            .thenApplyAsync { key ->
+                transferGariTokenUseCase.getEncodedTransaction(
+                    gariClientId = clientId,
+                    token = token,
+                    ownerPrivateKey = key,
+                    receiverPublicKey = receiverPublicKey,
+                    transactionAmount = transactionAmount
+                )
+            }
     }
 }

@@ -3,7 +3,7 @@ package io.gari.sample.di
 import com.google.gson.Gson
 import io.gari.sample.network.HttpClientBuilder
 import io.gari.sample.network.NetworkProvider
-import io.gari.sample.network.service.LoginNetworkService
+import io.gari.sample.network.service.DemoNetworkService
 import org.koin.dsl.module
 
 val networkModule = module {
@@ -16,5 +16,5 @@ val networkModule = module {
 
     single { get<NetworkProvider>().provideLoginService() }
 
-    single { LoginNetworkService(get()) }
+    single { DemoNetworkService(get()) }
 }

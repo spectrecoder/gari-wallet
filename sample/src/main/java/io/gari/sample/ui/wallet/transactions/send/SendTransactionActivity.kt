@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import io.coin.gari.domain.Gari
 import io.gari.sample.R
 import io.gari.sample.databinding.ActivitySendTransactionBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,6 +19,7 @@ class SendTransactionActivity : AppCompatActivity() {
             ?: throw IllegalStateException("Forget to pass web3 auth token?")
 
     private lateinit var screenBinding: ActivitySendTransactionBinding
+    private val walletKeyManager = Gari.provideWalletKeyManager(this)
 
     private val viewModel: SendTransactionViewModel by viewModel { parametersOf(web3AuthToken) }
 
@@ -37,7 +39,7 @@ class SendTransactionActivity : AppCompatActivity() {
     }
 
     private fun sendTransaction() {
-        viewModel.sendTransaction()
+        viewModel.sendTransaction(walletKeyManager)
     }
 
     private inner class PageClickListener : View.OnClickListener {

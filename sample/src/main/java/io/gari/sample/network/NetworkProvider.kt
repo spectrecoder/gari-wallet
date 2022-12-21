@@ -1,7 +1,7 @@
 package io.gari.sample.network
 
 import com.google.gson.Gson
-import io.gari.sample.network.service.LoginApiService
+import io.gari.sample.network.service.DemoApiService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,10 +11,10 @@ class NetworkProvider(
     private val gson: Gson
 ) {
 
-    fun provideLoginService(): LoginApiService {
+    fun provideLoginService(): DemoApiService {
         return provideApiService(
             Api.Url.DUMMY_TOKEN_DOMAIN,
-            LoginApiService::class.java
+            DemoApiService::class.java
         )
     }
 

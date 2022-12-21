@@ -6,7 +6,6 @@ import io.coin.gari.exceptions.WalletNotRegisteredException
 import io.coin.gari.network.Api
 import io.coin.gari.network.core.HttpCode
 import io.coin.gari.network.core.NetworkClient
-import io.coin.gari.network.entity.ApiEncodedTransaction
 import io.coin.gari.network.entity.ApiGariWallet
 import io.coin.gari.network.response.GariResponse
 import io.coin.gari.network.response.WalletDetailsResponse
@@ -150,6 +149,41 @@ internal class GariNetworkService(
             }
 
             Result.success(transactionSignature)
+        } catch (error: Throwable) {
+            Result.failure(error)
+        }
+    }
+
+    fun getEncodedTransaction(
+        gariClientId: String,
+        token: String,
+        receiverPublicKey: String,
+        transactionAmount: String
+    ): Result<String> {
+        return try {
+            val params = hashMapOf(
+                Api.Param.RECEIVER_PUBLIC_KEY to receiverPublicKey,
+                Api.Param.AMOUNT to transactionAmount,
+            )
+
+            val response = networkClient.post<GariResponse<String>>(
+                gariClientId = gariClientId,
+                token = token,
+                path = Api.Path.GET_SIGNED_TRANSACTION,
+                params = params,
+                responseType = TypeToken.getParameterized(
+                    GariResponse::class.java,
+                    String::class.java
+                ).type
+            )
+
+            val encodedTransaction = response.data
+
+            if (encodedTransaction.isNullOrEmpty()) {
+                return Result.failure(InvalidResponseBodyException())
+            }
+
+            Result.success(encodedTransaction)
         } catch (error: Throwable) {
             Result.failure(error)
         }

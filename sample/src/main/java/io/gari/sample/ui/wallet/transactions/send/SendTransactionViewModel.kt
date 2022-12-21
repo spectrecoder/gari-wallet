@@ -2,20 +2,30 @@ package io.gari.sample.ui.wallet.transactions.send
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import io.coin.gari.domain.Gari
+import io.coin.gari.domain.wallet.WalletKeyManager
+import io.coin.gari.utils.toLamports
 import io.gari.sample.R
+import io.gari.sample.data.DemoRepository
 import io.gari.sample.ui.login.InputError
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SendTransactionViewModel(
-    private val web3AuthToken: String
+    private val web3AuthToken: String,
+    private val demoRepository: DemoRepository
 ) : ViewModel() {
 
-    val receiverPublicKey = MutableLiveData<String>()
+    val receiverPublicKey = MutableLiveData<String>("3aBS3rmF2CTyATJWGraYkoSht93y3CDCvo75EBY3Rw9q")
     val receiverPublicKeyError = MutableLiveData<InputError?>()
 
-    val transactionAmount = MutableLiveData<String>()
+    val transactionAmount = MutableLiveData<String>("0.5")
     val transactionAmountError = MutableLiveData<InputError?>()
 
-    fun sendTransaction() {
+    val isProcessing = MutableLiveData(false)
+
+    fun sendTransaction(walletKeyManager: WalletKeyManager) {
         val receiverPublicKey = receiverPublicKey.value
 
         if (receiverPublicKey.isNullOrEmpty()) {
@@ -34,5 +44,42 @@ class SendTransactionViewModel(
         }
 
         transactionAmountError.value = null
+
+        val amount = transactionAmount.toBigDecimalOrNull()
+            ?.toLamports()
+            ?.toString()
+            ?: return
+
+        isProcessing.value = true
+
+        viewModelScope.launch(Dispatchers.IO) {
+            Gari.transferGariToken(
+                token = web3AuthToken,
+                keyManager = walletKeyManager,
+                receiverPublicKey = receiverPublicKey,
+                transactionAmount = amount
+            ).whenComplete { result, error ->
+                val signedTransaction = result.getOrNull()
+
+                if (result.isFailure
+                    || error != null
+                    || signedTransaction.isNullOrEmpty()
+                ) {
+                    // todo: handle error
+                    isProcessing.postValue(false)
+                    return@whenComplete
+                }
+
+                viewModelScope.launch(Dispatchers.IO) {
+                    demoRepository.sendTransaction(
+                        encodedTransaction = signedTransaction
+                    ).onSuccess {
+                        isProcessing.postValue(false)
+                    }.onFailure {
+                        isProcessing.postValue(false)
+                    }
+                }
+            }
+        }
     }
 }

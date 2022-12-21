@@ -80,6 +80,24 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black50"
+            android:visibility="@{viewModel.isProcessing ? View.VISIBLE : View.GONE}">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:max="100"
+                android:progress="45"
+                app:indicatorColor="@color/white" />
+
+        </FrameLayout>
+
     </FrameLayout>
 
 </layout>

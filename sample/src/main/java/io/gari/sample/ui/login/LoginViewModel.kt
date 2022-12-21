@@ -4,12 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.gari.sample.R
-import io.gari.sample.data.LoginRepository
+import io.gari.sample.data.DemoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val loginRepository: LoginRepository
+    private val loginRepository: DemoRepository
 ) : ViewModel() {
 
     val userId = MutableLiveData<String>("112233")
