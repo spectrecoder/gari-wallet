@@ -48,7 +48,7 @@ class Web3AuthManagerImpl : Web3AuthManager {
 
         web3Auth.login(
             LoginParams(
-                loginProvider = Provider.GOOGLE,
+                loginProvider = Provider.JWT,
                 extraLoginOptions = ExtraLoginOptions(
                     verifierIdField = USER_VERIFIER_ID_FIELD,
                     id_token = jwtToken,

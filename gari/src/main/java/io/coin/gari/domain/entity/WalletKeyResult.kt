@@ -1,4 +1,4 @@
-package io.coin.gari.ui.web3
+package io.coin.gari.domain.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

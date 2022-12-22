@@ -1,9 +1,11 @@
 package io.coin.gari.domain.wallet
 
 import androidx.activity.result.ActivityResultCaller
+import androidx.activity.result.contract.ActivityResultContract
+import io.coin.gari.domain.entity.WalletKeyResult
 import io.coin.gari.exceptions.Web3AuthorizeException
-import io.coin.gari.ui.web3.WalletKeyResult
-import io.coin.gari.ui.web3.Web3LoginResultContract
+import io.coin.gari.ui.auth.web3.Web3LoginResultContract
+import io.coin.gari.ui.auth.webgari.WebGariAuthResultContract
 import java8.util.concurrent.CompletableFuture
 
 class WalletKeyManager internal constructor(
@@ -13,7 +15,7 @@ class WalletKeyManager internal constructor(
     private var keyFutureResult: CompletableFuture<ByteArray>? = null
 
     private val web3AuthLauncher = resultCaller.registerForActivityResult(
-        Web3LoginResultContract()
+        getResultContract()
     ) { result ->
         handleResult(result)
     }
@@ -39,5 +41,15 @@ class WalletKeyManager internal constructor(
                 /* no op */
             }
         }
+    }
+
+    private fun getResultContract(): ActivityResultContract<String, WalletKeyResult> {
+//        return Web3LoginResultContract()
+        return WebGariAuthResultContract()
+    }
+
+    private enum class KeyProvider {
+        WEB3AUTH,
+        GARI
     }
 }

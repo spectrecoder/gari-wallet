@@ -1,16 +1,18 @@
-package io.coin.gari.ui.web3
+package io.coin.gari.ui.auth.webgari
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
+import io.coin.gari.domain.entity.WalletKeyResult
+import io.coin.gari.ui.auth.core.AuthResult
 
-internal class Web3LoginResultContract : ActivityResultContract<String, WalletKeyResult>() {
+internal class WebGariAuthResultContract : ActivityResultContract<String, WalletKeyResult>() {
 
     override fun createIntent(context: Context, input: String): Intent {
-        return Web3LoginActivity.buildIntent(
+        return WebGariAuthActivity.buildIntent(
             context = context,
-            token = input
+            jwtToken = input
         )
     }
 
@@ -22,7 +24,7 @@ internal class Web3LoginResultContract : ActivityResultContract<String, WalletKe
             Activity.RESULT_OK -> {
                 intent
                     ?.extras
-                    ?.getParcelable<WalletKeyResult>(Web3LoginActivity.WALLET_KEY_RESULT)
+                    ?.getParcelable<WalletKeyResult>(AuthResult.WALLET_KEY_RESULT)
                     ?: return WalletKeyResult.Failure
             }
 

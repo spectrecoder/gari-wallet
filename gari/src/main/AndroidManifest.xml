@@ -6,7 +6,7 @@
     <application>
 
         <activity
-            android:name=".ui.web3.Web3LoginActivity"
+            android:name=".ui.auth.web3.Web3LoginActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -22,6 +22,11 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".ui.auth.webgari.WebGariAuthActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
     </application>
 
