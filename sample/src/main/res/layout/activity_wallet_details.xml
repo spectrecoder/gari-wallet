@@ -93,10 +93,19 @@
                     tools:text="0.0" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnRequestAirdrop"
+                    android:id="@+id/btnReloadBalance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvBalance"
+                    android:layout_marginTop="12dp"
+                    android:onClick="@{() -> clickListener.onClick(btnReloadBalance)}"
+                    android:text="@string/wallet_status_reload_balance" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRequestAirdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnReloadBalance"
                     android:layout_marginTop="12dp"
                     android:onClick="@{() -> clickListener.onClick(btnRequestAirdrop)}"
                     android:text="@string/wallet_status_request_airdrop" />

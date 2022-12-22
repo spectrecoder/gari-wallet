@@ -16,7 +16,6 @@ import io.coin.gari.ui.auth.core.AbstractAuthActivity
 import io.coin.gari.utils.decodeHex
 import org.json.JSONObject
 
-
 internal class WebGariAuthActivity : AbstractAuthActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")

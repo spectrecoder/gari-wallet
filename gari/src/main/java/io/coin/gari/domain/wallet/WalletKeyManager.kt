@@ -14,6 +14,7 @@ class WalletKeyManager internal constructor(
 
     private var keyFutureResult: CompletableFuture<ByteArray>? = null
 
+    private val keyProvider: KeyProvider = KeyProvider.WEB3AUTH
     private val web3AuthLauncher = resultCaller.registerForActivityResult(
         getResultContract()
     ) { result ->
@@ -44,8 +45,10 @@ class WalletKeyManager internal constructor(
     }
 
     private fun getResultContract(): ActivityResultContract<String, WalletKeyResult> {
-//        return Web3LoginResultContract()
-        return WebGariAuthResultContract()
+        return when (keyProvider) {
+            KeyProvider.WEB3AUTH -> Web3LoginResultContract()
+            KeyProvider.GARI -> WebGariAuthResultContract()
+        }
     }
 
     private enum class KeyProvider {

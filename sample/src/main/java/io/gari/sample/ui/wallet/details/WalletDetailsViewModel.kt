@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import io.coin.gari.domain.Gari
 import io.coin.gari.domain.entity.GariWalletState
 import io.coin.gari.domain.wallet.WalletKeyManager
-import io.gari.sample.ui.login.InputError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -16,14 +15,18 @@ class WalletDetailsViewModel(
 
     val walletState = MutableLiveData<GariWalletState>()
 
-    val airdropAmount = MutableLiveData<String>()
-    val airdropAmountError = MutableLiveData<InputError?>()
-
     init {
         loadWalletDetails()
     }
 
     private fun loadWalletDetails() {
+        viewModelScope.launch(Dispatchers.Default) {
+            val state = Gari.getWalletState(web3AuthToken)
+            walletState.postValue(state)
+        }
+    }
+
+    fun reloadBalance() {
         viewModelScope.launch(Dispatchers.Default) {
             val state = Gari.getWalletState(web3AuthToken)
             walletState.postValue(state)

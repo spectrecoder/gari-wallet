@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import io.coin.gari.domain.Gari
-import io.coin.gari.domain.wallet.WalletKeyManager
 import io.coin.gari.domain.entity.GariWalletState
 import io.gari.sample.R
 import io.gari.sample.databinding.ActivityWalletDetailsBinding
@@ -77,6 +76,10 @@ class WalletDetailsActivity : AppCompatActivity() {
         viewModel.registerWallet(walletKeyManager)
     }
 
+    private fun reloadBalance() {
+        viewModel.reloadBalance()
+    }
+
     private fun requestAirdrop() {
         val walletState = viewModel.walletState.value
 
@@ -110,6 +113,7 @@ class WalletDetailsActivity : AppCompatActivity() {
                 R.id.btnActivateWallet -> activateWallet()
                 R.id.btnRequestAirdrop -> requestAirdrop()
                 R.id.btnSendTransaction -> sendTransaction()
+                R.id.btnReloadBalance -> reloadBalance()
             }
         }
     }

@@ -15,6 +15,7 @@
     <string name="wallet_status_error">Oops! There was an error!</string>
     <string name="wallet_status_activate">Activate</string>
     <string name="wallet_status_request_airdrop">Airdrop</string>
+    <string name="wallet_status_reload_balance">Reload balance</string>
     <string name="wallet_status_send_transaction">Send transaction</string>
     <string name="wallet_status_airdrop_amount">Airdrop amount</string>
     <string name="wallet_status_airdrop_amount_empty">Enter amount!</string>
