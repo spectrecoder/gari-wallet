@@ -14,6 +14,7 @@
     <string name="wallet_status_not_activated">Not Activated</string>
     <string name="wallet_status_error">Oops! There was an error!</string>
     <string name="wallet_status_activate">Activate</string>
+    <string name="wallet_status_logout">Logout</string>
     <string name="wallet_status_request_airdrop">Airdrop</string>
     <string name="wallet_status_reload_balance">Reload balance</string>
     <string name="wallet_status_send_transaction">Send transaction</string>

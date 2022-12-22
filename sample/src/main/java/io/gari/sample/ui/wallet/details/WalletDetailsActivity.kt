@@ -11,6 +11,8 @@ import io.coin.gari.domain.Gari
 import io.coin.gari.domain.entity.GariWalletState
 import io.gari.sample.R
 import io.gari.sample.databinding.ActivityWalletDetailsBinding
+import io.gari.sample.ui.login.LoginAction
+import io.gari.sample.ui.login.LoginActivity
 import io.gari.sample.ui.wallet.airdrop.AirdropActivity
 import io.gari.sample.ui.wallet.transactions.send.SendTransactionActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -80,6 +82,11 @@ class WalletDetailsActivity : AppCompatActivity() {
         viewModel.reloadBalance()
     }
 
+    private fun logout() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finishAffinity()
+    }
+
     private fun requestAirdrop() {
         val walletState = viewModel.walletState.value
 
@@ -114,6 +121,7 @@ class WalletDetailsActivity : AppCompatActivity() {
                 R.id.btnRequestAirdrop -> requestAirdrop()
                 R.id.btnSendTransaction -> sendTransaction()
                 R.id.btnReloadBalance -> reloadBalance()
+                R.id.btnLogout -> logout()
             }
         }
     }
