@@ -11,7 +11,6 @@ import io.coin.gari.domain.Gari
 import io.coin.gari.domain.entity.GariWalletState
 import io.gari.sample.R
 import io.gari.sample.databinding.ActivityWalletDetailsBinding
-import io.gari.sample.ui.login.LoginAction
 import io.gari.sample.ui.login.LoginActivity
 import io.gari.sample.ui.wallet.airdrop.AirdropActivity
 import io.gari.sample.ui.wallet.transactions.send.SendTransactionActivity
@@ -53,6 +52,7 @@ class WalletDetailsActivity : AppCompatActivity() {
     }
 
     private fun renderStateActivated(state: GariWalletState.Activated) {
+        screenBinding.tvWalletStatusTitle.isVisible = true
         screenBinding.containerWalletNotActivated.isVisible = false
         screenBinding.containerWalletActivated.isVisible = true
         screenBinding.containerCheckFailure.isVisible = false
@@ -61,12 +61,14 @@ class WalletDetailsActivity : AppCompatActivity() {
     }
 
     private fun renderStateNotExist() {
+        screenBinding.tvWalletStatusTitle.isVisible = true
         screenBinding.containerWalletNotActivated.isVisible = true
         screenBinding.containerWalletActivated.isVisible = false
         screenBinding.containerCheckFailure.isVisible = false
     }
 
     private fun renderStateError(state: GariWalletState.Error) {
+        screenBinding.tvWalletStatusTitle.isVisible = true
         screenBinding.containerWalletNotActivated.isVisible = false
         screenBinding.containerWalletActivated.isVisible = false
         screenBinding.containerCheckFailure.isVisible = true

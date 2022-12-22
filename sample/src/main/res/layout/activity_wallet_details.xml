@@ -41,6 +41,8 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvWalletStatusTitle"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/wallet_status_title"
@@ -186,6 +188,13 @@
             </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressWalletState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarLogin"
+            android:visibility="@{viewModel.isProcessing ? View.VISIBLE : View.GONE}" />
 
         <FrameLayout
             android:id="@+id/containerLogout"

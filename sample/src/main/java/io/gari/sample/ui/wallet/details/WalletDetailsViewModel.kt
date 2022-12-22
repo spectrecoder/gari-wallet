@@ -14,15 +14,18 @@ class WalletDetailsViewModel(
 ) : ViewModel() {
 
     val walletState = MutableLiveData<GariWalletState>()
+    val isProcessing = MutableLiveData<Boolean>()
 
     init {
         loadWalletDetails()
     }
 
     private fun loadWalletDetails() {
+        isProcessing.value = true
         viewModelScope.launch(Dispatchers.Default) {
             val state = Gari.getWalletState(web3AuthToken)
             walletState.postValue(state)
+            isProcessing.postValue(false)
         }
     }
 
