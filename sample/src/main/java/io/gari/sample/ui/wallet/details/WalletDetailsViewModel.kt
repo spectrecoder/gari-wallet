@@ -30,9 +30,11 @@ class WalletDetailsViewModel(
     }
 
     fun reloadBalance() {
+        isProcessing.value = true
         viewModelScope.launch(Dispatchers.Default) {
             val state = Gari.getWalletState(web3AuthToken)
             walletState.postValue(state)
+            isProcessing.postValue(false)
         }
     }
 

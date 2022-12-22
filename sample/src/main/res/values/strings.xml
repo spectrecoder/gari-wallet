@@ -35,4 +35,6 @@
     <string name="send_transaction_missing_receiver">Enter receiver PubKey!</string>
     <string name="send_transaction_missing_amount">Enter amount!</string>
 
+    <string name="transactions_history_actionbar">Transactions</string>
+
 </resources>
