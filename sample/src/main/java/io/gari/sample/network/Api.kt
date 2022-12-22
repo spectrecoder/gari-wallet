@@ -14,6 +14,11 @@ object Api {
         const val TRANSACTION = "/api/transaction"
     }
 
+    object Header {
+
+        const val TOKEN = "token"
+    }
+
     object Param {
 
         const val USER_ID = "userId"

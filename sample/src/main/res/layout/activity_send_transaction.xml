@@ -78,6 +78,30 @@
                 android:onClick="@{() -> clickListener.onClick(btnSendTransaction)}"
                 android:text="@string/send_transaction_cta_button" />
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/containerTransactionSignature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/airdrop_signature_title"
+                    android:textColor="#333333"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSignature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="#333333"
+                    tools:text="5KgajHX7Eqm5gk5mGPdSHd5ghvYCD1ARibcXBM4TKKNh3gfXenQ178SpeFb67DhawfwWvxbTUuFZHQS3zBUsCF2Q" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <FrameLayout

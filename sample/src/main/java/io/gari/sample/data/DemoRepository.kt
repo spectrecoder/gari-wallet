@@ -10,7 +10,10 @@ class DemoRepository(
         return loginNetworkService.getWeb3AuthToken(userId)
     }
 
-    suspend fun sendTransaction(encodedTransaction: String): Result<String> {
-        return loginNetworkService.sendTransaction(encodedTransaction)
+    suspend fun sendTransaction(
+        token: String,
+        encodedTransaction: String
+    ): Result<String> {
+        return loginNetworkService.sendTransaction(token, encodedTransaction)
     }
 }

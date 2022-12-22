@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.coin.gari.domain.Gari
 import io.coin.gari.domain.wallet.WalletKeyManager
-import io.coin.gari.utils.toLamports
 import io.gari.sample.R
 import io.gari.sample.data.DemoRepository
 import io.gari.sample.ui.login.InputError
@@ -22,6 +21,8 @@ class SendTransactionViewModel(
 
     val transactionAmount = MutableLiveData<String>("0.5")
     val transactionAmountError = MutableLiveData<InputError?>()
+
+    val viewState = MutableLiveData<TransactionViewState>(TransactionViewState.Ready)
 
     val isProcessing = MutableLiveData(false)
 
@@ -46,8 +47,8 @@ class SendTransactionViewModel(
         transactionAmountError.value = null
 
         val amount = transactionAmount.toBigDecimalOrNull()
-            ?.toLamports()
-            ?.toString()
+//            ?.toLamports()
+            ?.toPlainString()
             ?: return
 
         isProcessing.value = true
@@ -72,8 +73,10 @@ class SendTransactionViewModel(
 
                 viewModelScope.launch(Dispatchers.IO) {
                     demoRepository.sendTransaction(
+                        token = web3AuthToken,
                         encodedTransaction = signedTransaction
-                    ).onSuccess {
+                    ).onSuccess { signature ->
+                        viewState.postValue(TransactionViewState.Completed(signature))
                         isProcessing.postValue(false)
                     }.onFailure {
                         isProcessing.postValue(false)

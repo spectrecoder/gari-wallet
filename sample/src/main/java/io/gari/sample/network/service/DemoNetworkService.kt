@@ -23,13 +23,16 @@ class DemoNetworkService(
         }
     }
 
-    suspend fun sendTransaction(transaction: String): Result<String> {
+    suspend fun sendTransaction(
+        token: String,
+        transaction: String
+    ): Result<String> {
         try {
             val params = hashMapOf(
                 Api.Param.SIGNED_TRANSACTION to transaction
             )
 
-            val response = loginApiService.sendTransaction(params)
+            val response = loginApiService.sendTransaction(token, params)
             val web3AuthToken = response.body()
 
             if (!response.isSuccessful

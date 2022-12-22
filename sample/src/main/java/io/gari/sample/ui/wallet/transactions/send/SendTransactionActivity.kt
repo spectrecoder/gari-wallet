@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import io.coin.gari.domain.Gari
 import io.gari.sample.R
@@ -36,6 +37,26 @@ class SendTransactionActivity : AppCompatActivity() {
         screenBinding.toolbarSendTransaction.setNavigationOnClickListener {
             finish()
         }
+
+        viewModel.viewState.observe(this) { it?.let { renderViewState(it) } }
+    }
+
+    private fun renderViewState(state: TransactionViewState) {
+        when (state) {
+            is TransactionViewState.Ready -> renderTransactionForm()
+            is TransactionViewState.Completed -> renderAirdropResult(state.signature)
+        }
+    }
+
+    private fun renderTransactionForm() {
+        screenBinding.containerTransactionSignature.isVisible = false
+        screenBinding.btnSendTransaction.isVisible = true
+    }
+
+    private fun renderAirdropResult(signature: String) {
+        screenBinding.containerTransactionSignature.isVisible = true
+        screenBinding.btnSendTransaction.isVisible = false
+        screenBinding.tvSignature.text = signature
     }
 
     private fun sendTransaction() {
