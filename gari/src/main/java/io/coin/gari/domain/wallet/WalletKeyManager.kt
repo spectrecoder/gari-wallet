@@ -20,7 +20,7 @@ class WalletKeyManager internal constructor(
         handleResult(result)
     }
 
-    fun getPrivateKey(
+    internal fun getPrivateKey(
         token: String,
         onSuccess: (ByteArray) -> Unit,
         onFailure: () -> Unit
