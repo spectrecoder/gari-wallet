@@ -157,19 +157,49 @@ class WalletDetailsViewModel : ViewModel() {
 }
 ```
 
+### Request airdrop
+
+Airdrop operation requires wallet private key - from which Gari tokens will be transferred into user account.
+
+```kotlin
+class AirdropViewModel : ViewModel() {
+
+    fun requestAirdrop() {
+        val airdropAmount = "1" // 1 Gari
+        val airdropSponsor = "" // private key of wallet from which amount will be transferred (encoded in HEX)
+        val userJwtToken = ""
+        val publicKey = "" // user who will be credited with Gari tokens
+
+        viewModelScope.launch {
+            Gari.getAirDrop(
+                token = userJwtToken,
+                amount = airdropAmount,
+                destinationPublicKey = publicKey,
+                sponsorPrivateKey = airdropSponsor.decodeHex()
+            ).onSuccess { signature ->
+                // signature - it's transaction signature
+            }.onFailure {
+                // handle error on UI
+            }
+        }
+    }
+}
+```
+
+
 ## 🌟 Key Management
 
 For operations which are required wallet private key (like transactions), you have instantiate WalletKeyManager, which is part of Gari Wallet SDK
 
 ```kotlin
 object Gari {
-    
+
     ...
 
     fun provideWalletKeyManager(resultCaller: ActivityResultCaller): WalletKeyManager {
         return WalletKeyManager(resultCaller)
     }
-    
+
     ...
 }
 ```
@@ -183,7 +213,7 @@ class WalletDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         ...
     }
 }
