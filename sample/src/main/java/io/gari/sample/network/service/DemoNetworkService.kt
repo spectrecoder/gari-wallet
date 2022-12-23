@@ -46,4 +46,25 @@ class DemoNetworkService(
             return Result.failure(error)
         }
     }
+
+    suspend fun refreshJwtToken(token: String): Result<String> {
+        try {
+            val params = hashMapOf(
+                Api.Param.TOKEN to token
+            )
+
+            val response = loginApiService.refreshJwtToken(token, params)
+            val web3AuthToken = response.body()
+
+            if (!response.isSuccessful
+                || web3AuthToken.isNullOrEmpty()
+            ) {
+                return Result.failure(IllegalStateException())
+            }
+
+            return Result.success(web3AuthToken)
+        } catch (error: Throwable) {
+            return Result.failure(error)
+        }
+    }
 }

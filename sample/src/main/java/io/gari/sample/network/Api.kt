@@ -12,6 +12,7 @@ object Api {
 
         const val LOGIN = "/api/login"
         const val TRANSACTION = "/api/transaction"
+        const val REFRESH_JWT_TOKEN = "/api/replaceJwtToken"
     }
 
     object Header {
@@ -23,5 +24,6 @@ object Api {
 
         const val USER_ID = "userId"
         const val SIGNED_TRANSACTION = "partialSignedEncodedTransaction"
+        const val TOKEN = "token"
     }
 }

@@ -16,4 +16,8 @@ class DemoRepository(
     ): Result<String> {
         return loginNetworkService.sendTransaction(token, encodedTransaction)
     }
+
+    suspend fun refreshJwtToken(token: String): Result<String> {
+        return loginNetworkService.refreshJwtToken(token)
+    }
 }

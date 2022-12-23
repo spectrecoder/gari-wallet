@@ -54,8 +54,19 @@ class SendTransactionViewModel(
         isProcessing.value = true
 
         viewModelScope.launch(Dispatchers.IO) {
+            val freshTokenResult = demoRepository.refreshJwtToken(web3AuthToken)
+            val freshToken = freshTokenResult.getOrNull()
+
+            if (freshTokenResult.isFailure
+                || freshToken.isNullOrEmpty()
+            ) {
+                // todo: handle token failed
+                isProcessing.postValue(false)
+                return@launch
+            }
+
             Gari.transferGariToken(
-                token = web3AuthToken,
+                token = freshToken,
                 keyManager = walletKeyManager,
                 receiverPublicKey = receiverPublicKey,
                 transactionAmount = amount
@@ -73,7 +84,7 @@ class SendTransactionViewModel(
 
                 viewModelScope.launch(Dispatchers.IO) {
                     demoRepository.sendTransaction(
-                        token = web3AuthToken,
+                        token = freshToken,
                         encodedTransaction = signedTransaction
                     ).onSuccess { signature ->
                         viewState.postValue(TransactionViewState.Completed(signature))

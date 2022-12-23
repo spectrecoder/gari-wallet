@@ -188,4 +188,8 @@ internal class GariNetworkService(
             Result.failure(error)
         }
     }
+
+    fun getTransactionsHistory() {
+
+    }
 }
