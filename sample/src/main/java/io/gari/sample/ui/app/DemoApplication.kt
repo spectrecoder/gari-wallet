@@ -1,10 +1,10 @@
 package io.gari.sample.ui.app
 
-import com.web3auth.core.Web3AuthApp
 import io.coin.gari.domain.Gari
+import io.coin.gari.ui.app.GariApp
 import io.gari.sample.di.KoinLoader
 
-class DemoApplication : Web3AuthApp() {
+class DemoApplication : GariApp() {
 
     override fun onCreate() {
         super.onCreate()

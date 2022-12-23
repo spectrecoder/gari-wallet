@@ -1,3 +1,11 @@
+buildscript {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -51,6 +59,8 @@ android {
 }
 
 dependencies {
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+
     implementation android.coreKtx
     implementation android.appcompat
     implementation android.material
