@@ -18,10 +18,6 @@ android {
     namespace 'io.gari.sample'
     compileSdk appConfig.compileSdk
 
-    configurations {
-        compile { exclude module: 'bcprov-jdk15on' }
-    }
-
     defaultConfig {
         applicationId "io.gari.sample"
         minSdk appConfig.minSdk
@@ -77,6 +73,7 @@ dependencies {
     implementation network.okHttpLogging
 
     implementation project(":gari")
+//    implementation files('libs/gari-release.aar')
 
     testImplementation unitTesting.junit
 

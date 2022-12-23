@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import io.coin.gari.domain.Gari
 import io.coin.gari.domain.entity.GariWalletState
 import io.coin.gari.domain.wallet.WalletKeyManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class WalletDetailsViewModel(
@@ -22,7 +21,7 @@ class WalletDetailsViewModel(
 
     private fun loadWalletDetails() {
         isProcessing.value = true
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch {
             val state = Gari.getWalletState(web3AuthToken)
             walletState.postValue(state)
             isProcessing.postValue(false)
@@ -30,39 +29,32 @@ class WalletDetailsViewModel(
     }
 
     fun reloadBalance() {
-        isProcessing.value = true
-        viewModelScope.launch(Dispatchers.Default) {
-            val state = Gari.getWalletState(web3AuthToken)
-            walletState.postValue(state)
-            isProcessing.postValue(false)
-        }
+        loadWalletDetails()
     }
 
     fun registerWallet(keyManager: WalletKeyManager) {
-        viewModelScope.launch(Dispatchers.Default) {
-            Gari.createWallet(
+        viewModelScope.launch {
+            val walletResult = Gari.createWallet(
                 keyManager = keyManager,
                 token = web3AuthToken
-            ).whenComplete { walletResult, error ->
-                val wallet = walletResult.getOrNull()
+            )
 
-                if (walletResult.isFailure
-                    || wallet == null
-                    || error != null
-                ) {
-                    walletState.postValue(
-                        GariWalletState.Error(
-                            walletResult.exceptionOrNull() ?: error
-                        )
+            val wallet = walletResult.getOrNull()
+
+            if (walletResult.isFailure || wallet == null) {
+                walletState.postValue(
+                    GariWalletState.Error(
+                        walletResult.exceptionOrNull()
+                            ?: IllegalStateException()
                     )
-                } else {
-                    walletState.postValue(
-                        GariWalletState.Activated(
-                            wallet.publicKey,
-                            wallet.balance
-                        )
+                )
+            } else {
+                walletState.postValue(
+                    GariWalletState.Activated(
+                        wallet.publicKey,
+                        wallet.balance
                     )
-                }
+                )
             }
         }
     }

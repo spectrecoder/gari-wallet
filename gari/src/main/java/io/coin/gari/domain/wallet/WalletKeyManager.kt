@@ -3,16 +3,15 @@ package io.coin.gari.domain.wallet
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.contract.ActivityResultContract
 import io.coin.gari.domain.entity.WalletKeyResult
-import io.coin.gari.exceptions.Web3AuthorizeException
 import io.coin.gari.ui.auth.web3.Web3LoginResultContract
 import io.coin.gari.ui.auth.webgari.WebGariAuthResultContract
-import java8.util.concurrent.CompletableFuture
 
 class WalletKeyManager internal constructor(
     resultCaller: ActivityResultCaller
 ) {
 
-    private var keyFutureResult: CompletableFuture<ByteArray>? = null
+    private var onSuccess: ((ByteArray) -> Unit)? = null
+    private var onFailure: (() -> Unit)? = null
 
     private val keyProvider: KeyProvider = KeyProvider.WEB3AUTH
     private val web3AuthLauncher = resultCaller.registerForActivityResult(
@@ -21,21 +20,25 @@ class WalletKeyManager internal constructor(
         handleResult(result)
     }
 
-    fun getPrivateKey(token: String): CompletableFuture<ByteArray> {
-        web3AuthLauncher.launch(token)
+    fun getPrivateKey(
+        token: String,
+        onSuccess: (ByteArray) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        this.onSuccess = onSuccess
+        this.onFailure = onFailure
 
-        return CompletableFuture<ByteArray>()
-            .apply { keyFutureResult = this }
+        web3AuthLauncher.launch(token)
     }
 
     private fun handleResult(result: WalletKeyResult) {
         when (result) {
             is WalletKeyResult.Success -> {
-                keyFutureResult?.complete(result.key)
+                onSuccess?.invoke(result.key)
             }
 
             is WalletKeyResult.Failure -> {
-                keyFutureResult?.completeExceptionally(Web3AuthorizeException())
+                onFailure?.invoke()
             }
 
             is WalletKeyResult.Canceled -> {

@@ -17,7 +17,6 @@ internal object Api {
         const val AIRDROP_GET_ENCODED_TRANSACTION = "/appwallet/get-encode-transaction-airdrop"
         const val AIRDROP_SEND_SIGNED_TRANSACTION = "/appwallet/airdrop"
         const val GET_SIGNED_TRANSACTION = "/appwallet/get-encode-transaction"
-        const val TRANSACTIONS_HISTORY = "/appwallet/transactions"
     }
 
     object Param {

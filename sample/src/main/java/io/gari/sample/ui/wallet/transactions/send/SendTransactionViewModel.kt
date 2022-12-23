@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.coin.gari.domain.Gari
 import io.coin.gari.domain.wallet.WalletKeyManager
+import io.coin.gari.utils.toLamports
 import io.gari.sample.R
 import io.gari.sample.data.DemoRepository
 import io.gari.sample.ui.login.InputError
@@ -47,8 +48,8 @@ class SendTransactionViewModel(
         transactionAmountError.value = null
 
         val amount = transactionAmount.toBigDecimalOrNull()
-//            ?.toLamports()
-            ?.toPlainString()
+            ?.toLamports()
+            ?.toString()
             ?: return
 
         isProcessing.value = true
@@ -70,29 +71,30 @@ class SendTransactionViewModel(
                 keyManager = walletKeyManager,
                 receiverPublicKey = receiverPublicKey,
                 transactionAmount = amount
-            ).whenComplete { result, error ->
-                val signedTransaction = result.getOrNull()
+            ).onSuccess { signedTransaction ->
+                sendTransactionForValidation(
+                    token = freshToken,
+                    signedTransaction = signedTransaction
+                )
+            }.onFailure {
+                isProcessing.postValue(false)
+            }
+        }
+    }
 
-                if (result.isFailure
-                    || error != null
-                    || signedTransaction.isNullOrEmpty()
-                ) {
-                    // todo: handle error
-                    isProcessing.postValue(false)
-                    return@whenComplete
-                }
-
-                viewModelScope.launch(Dispatchers.IO) {
-                    demoRepository.sendTransaction(
-                        token = freshToken,
-                        encodedTransaction = signedTransaction
-                    ).onSuccess { signature ->
-                        viewState.postValue(TransactionViewState.Completed(signature))
-                        isProcessing.postValue(false)
-                    }.onFailure {
-                        isProcessing.postValue(false)
-                    }
-                }
+    private fun sendTransactionForValidation(
+        token: String,
+        signedTransaction: String
+    ) {
+        viewModelScope.launch {
+            demoRepository.sendTransaction(
+                token = token,
+                encodedTransaction = signedTransaction
+            ).onSuccess { signature ->
+                viewState.postValue(TransactionViewState.Completed(signature))
+                isProcessing.postValue(false)
+            }.onFailure {
+                isProcessing.postValue(false)
             }
         }
     }
