@@ -44,11 +44,11 @@ dependencies {
     implementation network.okHttpLogging
     implementation network.gson
 
-    api(web3Auth.core) {
+    implementation(web3Auth.core) {
         exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on'
     }
 
-    api(solana.solanaWeb3) {
+    implementation(solana.solanaWeb3) {
         exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
     }
 

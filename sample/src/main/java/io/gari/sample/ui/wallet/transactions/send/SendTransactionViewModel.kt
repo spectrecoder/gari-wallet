@@ -16,7 +16,7 @@ class SendTransactionViewModel(
     private val demoRepository: DemoRepository
 ) : ViewModel() {
 
-    val receiverPublicKey = MutableLiveData<String>("3aBS3rmF2CTyATJWGraYkoSht93y3CDCvo75EBY3Rw9q")
+    val receiverPublicKey = MutableLiveData<String>("96PeKrsDEm4X7wiwSFePFapu1N1cyzoyWQzhs6W3TVhZ")
     val receiverPublicKeyError = MutableLiveData<InputError?>()
 
     val transactionAmount = MutableLiveData<String>("0.5")
