@@ -1,8 +1,6 @@
 buildscript {
     repositories {
-        flatDir {
-            dirs 'libs'
-        }
+        mavenCentral()
     }
 }
 
@@ -72,8 +70,10 @@ dependencies {
     implementation network.retrofitConverterGson
     implementation network.okHttpLogging
 
-    implementation project(":gari")
-//    implementation files('libs/gari-release.aar')
+    implementation 'io.github.gari-network:GariWallet:0.1'
+
+// connect for development purpose
+//    implementation project(":gari")
 
     testImplementation unitTesting.junit
 
