@@ -4,7 +4,14 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.parcelize'
 }
 
+ext {
+    PUBLISH_GROUP_ID = 'io.github.gari-network'
+    PUBLISH_VERSION = '0.1'
+    PUBLISH_ARTIFACT_ID = 'GariWallet'
+}
+
 apply from: '../dependencies.gradle'
+apply from: 'publish-remote.gradle'
 
 android {
     namespace 'io.coin.gari'
@@ -19,6 +26,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
