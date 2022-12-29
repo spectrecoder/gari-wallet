@@ -21,6 +21,7 @@
     <string name="wallet_status_transactions_history">Transactions history</string>
     <string name="wallet_status_airdrop_amount">Airdrop amount</string>
     <string name="wallet_status_airdrop_amount_empty">Enter amount!</string>
+    <string name="wallet_status_address_copied">Public address copy is ready!</string>
 
     <string name="airdrop_actionbar">Airdrop</string>
     <string name="airdrop_sponsor_hint">Sponsor private key (HEX)</string>

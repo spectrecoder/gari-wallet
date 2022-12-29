@@ -41,16 +41,16 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvWalletStatusTitle"
-                android:visibility="gone"
-                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/wallet_status_title"
                 android:textColor="#333333"
                 android:textSize="16sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
             <RelativeLayout
                 android:id="@+id/containerWalletActivated"
@@ -72,22 +72,43 @@
                     android:text="@string/wallet_status_activated"
                     app:drawableStartCompat="@drawable/ic_checkmark_green" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvPubKey"
+                <LinearLayout
+                    android:id="@+id/containerPubkey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvActivatedTitle"
                     android:layout_marginTop="16dp"
-                    android:drawablePadding="4dp"
-                    android:gravity="center_vertical"
-                    app:drawableStartCompat="@drawable/ic_key"
-                    tools:text="14214SFafasf2412412sfaf31452153153215142414214fasf2144214" />
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPubKey"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
+                        app:drawableStartCompat="@drawable/ic_key"
+                        tools:text="14214SFafasf2412412sfaf31452153153215142414214fasf2144214" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCopy"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="@{() -> clickListener.onClick(ivCopy)}"
+                        android:padding="2dp"
+                        app:srcCompat="@drawable/ic_copy" />
+
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvBalance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvPubKey"
+                    android:layout_below="@+id/containerPubkey"
                     android:layout_marginTop="16dp"
                     android:drawablePadding="4dp"
                     android:gravity="center_vertical"

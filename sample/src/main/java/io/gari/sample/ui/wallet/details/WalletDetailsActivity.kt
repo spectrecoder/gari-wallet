@@ -1,5 +1,7 @@
 package io.gari.sample.ui.wallet.details
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.snackbar.Snackbar
 import io.coin.gari.domain.Gari
 import io.coin.gari.domain.entity.GariWalletState
 import io.gari.sample.R
@@ -115,6 +118,25 @@ class WalletDetailsActivity : AppCompatActivity() {
         )
     }
 
+    private fun copyPubKey() {
+        val walletState = viewModel.walletState.value
+
+        if (walletState !is GariWalletState.Activated) {
+            // todo: wallet has not been activated, requires activating first
+            return
+        }
+
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Gari PubKey", walletState.pubKey)
+        clipboard.setPrimaryClip(clip)
+
+        Snackbar.make(
+            screenBinding.root,
+            getString(R.string.wallet_status_address_copied),
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
     private inner class PageClickListener : View.OnClickListener {
 
         override fun onClick(view: View) {
@@ -124,6 +146,7 @@ class WalletDetailsActivity : AppCompatActivity() {
                 R.id.btnSendTransaction -> sendTransaction()
                 R.id.btnReloadBalance -> reloadBalance()
                 R.id.btnLogout -> logout()
+                R.id.ivCopy -> copyPubKey()
             }
         }
     }
