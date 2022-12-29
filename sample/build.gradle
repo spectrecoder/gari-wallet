@@ -23,6 +23,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        manifestPlaceholders = [authRedirect: "io.coin.gari"]
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -70,10 +72,10 @@ dependencies {
     implementation network.retrofitConverterGson
     implementation network.okHttpLogging
 
-    implementation 'io.github.gari-network:GariWallet:0.1'
+//    implementation 'io.github.gari-network:GariWallet:0.1'
 
-// connect for development purpose
-//    implementation project(":gari")
+    // connect for development purpose
+    implementation project(":gari")
 
     testImplementation unitTesting.junit
 

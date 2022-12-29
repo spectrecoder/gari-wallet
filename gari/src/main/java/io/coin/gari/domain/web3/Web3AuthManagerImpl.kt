@@ -66,15 +66,15 @@ class Web3AuthManagerImpl : Web3AuthManager {
     }
 
     private fun handleResult(
-        ed25519PrivKey: String?,
+        ed25519PrivateKey: String?,
         error: Throwable?,
         resultOutput: CompletableFuture<ByteArray>
     ) {
-        if (error != null || ed25519PrivKey.isNullOrEmpty()) {
+        if (error != null || ed25519PrivateKey.isNullOrEmpty()) {
             resultOutput.completeExceptionally(Web3AuthorizeException(error))
         } else {
             val decodedKey = try {
-                ed25519PrivKey.decodeHex()
+                ed25519PrivateKey.decodeHex()
             } catch (error: Throwable) {
                 resultOutput.completeExceptionally(
                     Web3AuthorizeException(

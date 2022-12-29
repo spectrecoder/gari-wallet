@@ -26,6 +26,29 @@ Open your app's `AndroidManifest.xml` file and add the following permission:
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
+
+### Manifest placeholder
+
+Open your gradle.build file for your main application module - override manifest variable **$authRedirect**.
+This url will be used as deeplink scheme for Web3Auth redirects.
+
+You should add it to whitelist during configuring Web3Auth dashboard.
+Read documentation to get more information - https://web3auth.io/docs/sdk/android/#configure-a-plug-n-play-project
+
+All Logic for handling deeplink redirects has been already handled by Gari Wallet SDK, you just need to declare manifest variable in your gradle scripts.
+
+```groovy
+android {
+    namespace 'io.gari.sample'
+    compileSdk appConfig.compileSdk
+
+    defaultConfig {
+        ...
+        manifestPlaceholders = [authRedirect: "io.coin.gari"]
+        ...
+    }
+```
+
 ## 💥 Initialization
 
 - Extend your Application class from GariApp
