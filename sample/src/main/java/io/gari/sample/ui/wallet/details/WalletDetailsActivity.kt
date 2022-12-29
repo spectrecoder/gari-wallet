@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -127,14 +128,16 @@ class WalletDetailsActivity : AppCompatActivity() {
         }
 
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("Gari PubKey", walletState.pubKey)
+        val clip = ClipData.newPlainText("PubKey", walletState.pubKey)
         clipboard.setPrimaryClip(clip)
 
-        Snackbar.make(
-            screenBinding.root,
-            getString(R.string.wallet_status_address_copied),
-            Snackbar.LENGTH_SHORT
-        ).show()
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+            Snackbar.make(
+                screenBinding.root,
+                getString(R.string.wallet_status_address_copied),
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private inner class PageClickListener : View.OnClickListener {
