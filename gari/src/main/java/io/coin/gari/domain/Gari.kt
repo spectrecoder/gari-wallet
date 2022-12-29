@@ -6,6 +6,7 @@ import io.coin.gari.di.UseCaseModuleInjection
 import io.coin.gari.domain.entity.GariWallet
 import io.coin.gari.domain.entity.GariWalletState
 import io.coin.gari.domain.wallet.WalletKeyManager
+import io.coin.gari.domain.web3.Web3AuthConfig
 import io.coin.gari.exceptions.Web3AuthorizeException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -15,14 +16,16 @@ import kotlin.coroutines.resume
 object Gari {
 
     private var clientId: String = ""
+    private var web3AuthConfig: Web3AuthConfig? = null
 
     private val getWalletDetailsUseCase = UseCaseModuleInjection.getWalletDetailsUseCase
     private val createWalletUseCase = UseCaseModuleInjection.createWalletUseCase
     private val requestAirdropUseCase = UseCaseModuleInjection.requestAirdropUseCase
     private val transferGariTokenUseCase = UseCaseModuleInjection.transferGariTokenUseCase
 
-    fun initialize(clientId: String) {
+    fun initialize(clientId: String, web3AuthConfig: Web3AuthConfig) {
         this.clientId = clientId
+        this.web3AuthConfig = web3AuthConfig
     }
 
     fun provideWalletKeyManager(resultCaller: ActivityResultCaller): WalletKeyManager {
@@ -123,11 +126,17 @@ object Gari {
 
     private suspend fun getPrivateKey(
         token: String,
-        keyManager: WalletKeyManager
+        keyManager: WalletKeyManager,
     ): Result<ByteArray> {
+        val web3AuthConfig = web3AuthConfig
+            ?: return Result.failure(
+                IllegalStateException("Web3AuthConfig is not initialized. Check Gari.initialize() function")
+            )
+
         return suspendCancellableCoroutine<Result<ByteArray>> { continuation ->
             keyManager.getPrivateKey(
                 token = token,
+                web3AuthConfig = web3AuthConfig,
                 onSuccess = { key ->
                     if (!continuation.isCancelled) {
                         continuation.resume(Result.success(key))

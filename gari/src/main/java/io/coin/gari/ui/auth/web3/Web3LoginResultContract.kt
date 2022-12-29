@@ -5,14 +5,19 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import io.coin.gari.domain.entity.WalletKeyResult
+import io.coin.gari.ui.auth.core.AuthConfigArgs
 import io.coin.gari.ui.auth.core.AuthResult
 
-internal class Web3LoginResultContract : ActivityResultContract<String, WalletKeyResult>() {
+internal class Web3LoginResultContract : ActivityResultContract<AuthConfigArgs, WalletKeyResult>() {
 
-    override fun createIntent(context: Context, input: String): Intent {
+    override fun createIntent(context: Context, input: AuthConfigArgs): Intent {
+        val args = input as? AuthConfigArgs.Web3AuthArgs
+            ?: throw IllegalStateException("Unexpected arguments")
+
         return Web3LoginActivity.buildIntent(
             context = context,
-            token = input
+            token = args.jwtToken,
+            config = args.web3AuthConfig
         )
     }
 

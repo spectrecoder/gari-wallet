@@ -5,14 +5,19 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import io.coin.gari.domain.entity.WalletKeyResult
+import io.coin.gari.ui.auth.core.AuthConfigArgs
 import io.coin.gari.ui.auth.core.AuthResult
 
-internal class WebGariAuthResultContract : ActivityResultContract<String, WalletKeyResult>() {
+internal class WebGariAuthResultContract :
+    ActivityResultContract<AuthConfigArgs, WalletKeyResult>() {
 
-    override fun createIntent(context: Context, input: String): Intent {
+    override fun createIntent(context: Context, input: AuthConfigArgs): Intent {
+        val args = input as? AuthConfigArgs.WebViewArgs
+            ?: throw IllegalStateException("Unexpected arguments")
+
         return WebGariAuthActivity.buildIntent(
             context = context,
-            jwtToken = input
+            jwtToken = args.jwtToken
         )
     }
 

@@ -3,6 +3,8 @@ package io.coin.gari.domain.wallet
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.contract.ActivityResultContract
 import io.coin.gari.domain.entity.WalletKeyResult
+import io.coin.gari.domain.web3.Web3AuthConfig
+import io.coin.gari.ui.auth.core.AuthConfigArgs
 import io.coin.gari.ui.auth.web3.Web3LoginResultContract
 import io.coin.gari.ui.auth.webgari.WebGariAuthResultContract
 
@@ -22,13 +24,14 @@ class WalletKeyManager internal constructor(
 
     internal fun getPrivateKey(
         token: String,
+        web3AuthConfig: Web3AuthConfig,
         onSuccess: (ByteArray) -> Unit,
         onFailure: () -> Unit
     ) {
         this.onSuccess = onSuccess
         this.onFailure = onFailure
 
-        web3AuthLauncher.launch(token)
+        web3AuthLauncher.launch(getAuthArgs(token, web3AuthConfig))
     }
 
     private fun handleResult(result: WalletKeyResult) {
@@ -47,10 +50,27 @@ class WalletKeyManager internal constructor(
         }
     }
 
-    private fun getResultContract(): ActivityResultContract<String, WalletKeyResult> {
+    private fun getResultContract(): ActivityResultContract<AuthConfigArgs, WalletKeyResult> {
         return when (keyProvider) {
             KeyProvider.WEB3AUTH -> Web3LoginResultContract()
             KeyProvider.GARI -> WebGariAuthResultContract()
+        }
+    }
+
+    private fun getAuthArgs(jwtToken: String, web3AuthConfig: Web3AuthConfig): AuthConfigArgs {
+        return when (keyProvider) {
+            KeyProvider.WEB3AUTH -> {
+                AuthConfigArgs.Web3AuthArgs(
+                    jwtToken = jwtToken,
+                    web3AuthConfig = web3AuthConfig
+                )
+            }
+
+            KeyProvider.GARI -> {
+                AuthConfigArgs.WebViewArgs(
+                    jwtToken = jwtToken
+                )
+            }
         }
     }
 
