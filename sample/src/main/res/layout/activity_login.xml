@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="io.gari.sample.ui.login.LoginViewModel" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/login_toolbar_title"
+            app:titleTextColor="@color/white" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputUserId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/login_user_id_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLogin"
+            bind:inputError="@{viewModel.userIdError}">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.userId}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:onClick="@{() -> clickListener.onClick(btnLogin)}"
+            android:text="@string/login_cta_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputUserId" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black50"
+            android:visibility="@{viewModel.isProcessing ? View.VISIBLE : View.GONE}">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:max="100"
+                android:progress="45"
+                app:indicatorColor="@color/white" />
+
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,61 @@
+ext {
+
+    appConfig = [
+            minSdk    : 24,
+            targetSdk : 32,
+            compileSdk: 32,
+    ]
+
+    versions = [
+            coreKtx  : "1.8.0",
+            appcompat: "1.5.1",
+            material : "1.7.0",
+            lifecycle: "2.5.1",
+            koin     : "3.1.5",
+            web3Auth : "3.1.0",
+            retrofit : "2.9.0",
+            okHttp   : "4.10.0",
+            gson     : "2.10",
+    ]
+
+    testingVersions = [
+            junit: "4.13.2",
+    ]
+
+    android = [
+            coreKtx  : "androidx.core:core-ktx:${versions.coreKtx}",
+            appcompat: "androidx.appcompat:appcompat:${versions.appcompat}",
+            material : "com.google.android.material:material:${versions.material}",
+    ]
+
+    lifeCycle = [
+            core     : "androidx.lifecycle:lifecycle-common:${versions.lifecycle}",
+            viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}",
+            liveData : "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}",
+    ]
+
+    di = [
+            koinCore  : "io.insert-koin:koin-android:${versions.koin}",
+            koinCompat: "io.insert-koin:koin-android-compat:${versions.koin}",
+    ]
+
+    web3Auth = [
+            core: "org.torusresearch:web3auth-android-sdk:${versions.web3Auth}"
+    ]
+
+    network = [
+            retrofitCore         : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+            retrofitConverterGson: "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
+            okHttp               : "com.squareup.okhttp3:okhttp:${versions.okHttp}",
+            okHttpLogging        : "com.squareup.okhttp3:logging-interceptor:${versions.okHttp}",
+            gson                 : "com.google.code.gson:gson:${versions.gson}"
+    ]
+
+    unitTesting = [
+            junit: "junit:junit:${testingVersions.junit}"
+    ]
+
+    solana = [
+            solanaWeb3: "com.portto.solana:web3:0.1.3"
+    ]
+}

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="io.gari.sample.ui.wallet.details.WalletDetailsViewModel" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/wallet_status_actionbar"
+            app:titleTextColor="@color/white" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:padding="16dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvWalletStatusTitle"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wallet_status_title"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RelativeLayout
+                android:id="@+id/containerWalletActivated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvWalletStatusTitle"
+                tools:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvActivatedTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/wallet_status_activated"
+                    app:drawableStartCompat="@drawable/ic_checkmark_green" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPubKey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvActivatedTitle"
+                    android:layout_marginTop="16dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    app:drawableStartCompat="@drawable/ic_key"
+                    tools:text="14214SFafasf2412412sfaf31452153153215142414214fasf2144214" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBalance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvPubKey"
+                    android:layout_marginTop="16dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    app:drawableStartCompat="@drawable/ic_balance"
+                    tools:text="0.0" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnReloadBalance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvBalance"
+                    android:layout_marginTop="12dp"
+                    android:onClick="@{() -> clickListener.onClick(btnReloadBalance)}"
+                    android:text="@string/wallet_status_reload_balance" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRequestAirdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnReloadBalance"
+                    android:layout_marginTop="12dp"
+                    android:onClick="@{() -> clickListener.onClick(btnRequestAirdrop)}"
+                    android:text="@string/wallet_status_request_airdrop" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSendTransaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnRequestAirdrop"
+                    android:layout_marginTop="12dp"
+                    android:onClick="@{() -> clickListener.onClick(btnSendTransaction)}"
+                    android:text="@string/wallet_status_send_transaction" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/containerCheckFailure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvWalletStatusTitle"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvErrorTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/wallet_status_error"
+                    app:drawableStartCompat="@drawable/ic_error" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvErrorDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvErrorTitle"
+                    android:layout_marginTop="16dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    app:drawableStartCompat="@drawable/ic_error_description"
+                    tools:text="Error message stacktrace" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/containerWalletNotActivated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvWalletStatusTitle"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvWalletActivatedTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/wallet_status_not_activated"
+                    app:drawableStartCompat="@drawable/ic_wallet" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnActivateWallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvWalletActivatedTitle"
+                    android:layout_marginTop="16dp"
+                    android:onClick="@{() -> clickListener.onClick(btnActivateWallet)}"
+                    android:text="@string/wallet_status_activate" />
+
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressWalletState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarLogin"
+            android:visibility="@{viewModel.isProcessing ? View.VISIBLE : View.GONE}" />
+
+        <FrameLayout
+            android:id="@+id/containerLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/purple_200" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:onClick="@{() -> clickListener.onClick(btnLogout)}"
+                android:text="@string/wallet_status_logout" />
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</layout>

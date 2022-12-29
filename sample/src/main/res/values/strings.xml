@@ -1,0 +1,41 @@
+<resources>
+
+    <string name="app_name">Gari Wallet Sample</string>
+
+    <string name="login_user_id_hint">User it</string>
+    <string name="login_user_name_hint">User name</string>
+    <string name="login_cta_button">Login</string>
+    <string name="login_error_empty_user_id">Enter user id!</string>
+    <string name="login_toolbar_title">Authorize</string>
+
+    <string name="wallet_status_actionbar">Wallet</string>
+    <string name="wallet_status_title">Wallet status:</string>
+    <string name="wallet_status_activated">Activated</string>
+    <string name="wallet_status_not_activated">Not Activated</string>
+    <string name="wallet_status_error">Oops! There was an error!</string>
+    <string name="wallet_status_activate">Activate</string>
+    <string name="wallet_status_logout">Logout</string>
+    <string name="wallet_status_request_airdrop">Airdrop</string>
+    <string name="wallet_status_reload_balance">Reload balance</string>
+    <string name="wallet_status_send_transaction">Send transaction</string>
+    <string name="wallet_status_transactions_history">Transactions history</string>
+    <string name="wallet_status_airdrop_amount">Airdrop amount</string>
+    <string name="wallet_status_airdrop_amount_empty">Enter amount!</string>
+
+    <string name="airdrop_actionbar">Airdrop</string>
+    <string name="airdrop_sponsor_hint">Sponsor private key (HEX)</string>
+    <string name="airdrop_sponsor_required">Private key (HEX) from which amount will be deducted</string>
+    <string name="airdrop_cta_button">Request airdrop</string>
+    <string name="airdrop_repeat">Repeat airdrop?</string>
+    <string name="airdrop_signature_title">Signature:</string>
+
+    <string name="send_transaction">Send transaction</string>
+    <string name="send_transaction_amount_hint">Amount</string>
+    <string name="send_transaction_destination_hint">Receiver public key</string>
+    <string name="send_transaction_cta_button">Send</string>
+    <string name="send_transaction_missing_receiver">Enter receiver PubKey!</string>
+    <string name="send_transaction_missing_amount">Enter amount!</string>
+
+    <string name="transactions_history_actionbar">Transactions</string>
+
+</resources>
