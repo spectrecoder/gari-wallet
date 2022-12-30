@@ -16,6 +16,15 @@ android {
     namespace 'io.gari.sample'
     compileSdk appConfig.compileSdk
 
+    signingConfigs {
+        demo {
+            storeFile file("keys/demo_key.jks")
+            storePassword "gariandroid"
+            keyPassword "gariandroid"
+            keyAlias "gari"
+        }
+    }
+
     defaultConfig {
         applicationId "io.gari.sample"
         minSdk appConfig.minSdk
@@ -33,7 +42,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+        }
         release {
+            signingConfig signingConfigs.demo
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -46,6 +59,11 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 
     packagingOptions {

@@ -6,7 +6,7 @@ plugins {
 
 ext {
     PUBLISH_GROUP_ID = 'io.github.gari-network'
-    PUBLISH_VERSION = '0.1'
+    PUBLISH_VERSION = '0.2'
     PUBLISH_ARTIFACT_ID = 'GariWallet'
 }
 
@@ -30,7 +30,7 @@ android {
             minifyEnabled false
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
