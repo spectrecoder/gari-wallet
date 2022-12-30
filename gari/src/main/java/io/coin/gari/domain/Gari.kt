@@ -7,6 +7,7 @@ import io.coin.gari.domain.entity.GariWallet
 import io.coin.gari.domain.entity.GariWalletState
 import io.coin.gari.domain.wallet.WalletKeyManager
 import io.coin.gari.domain.web3.Web3AuthConfig
+import io.coin.gari.exceptions.Web3AuthCancellationException
 import io.coin.gari.exceptions.Web3AuthorizeException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -154,6 +155,11 @@ object Gari {
                 onFailure = {
                     if (!continuation.isCancelled) {
                         continuation.resume(Result.failure(Web3AuthorizeException()))
+                    }
+                },
+                onCancel = {
+                    if (!continuation.isCancelled) {
+                        continuation.resume(Result.failure(Web3AuthCancellationException()))
                     }
                 }
             )

@@ -14,6 +14,7 @@ class WalletKeyManager internal constructor(
 
     private var onSuccess: ((ByteArray) -> Unit)? = null
     private var onFailure: (() -> Unit)? = null
+    private var onCancel: (() -> Unit)? = null
 
     private val keyProvider: KeyProvider = KeyProvider.WEB3AUTH
     private val web3AuthLauncher = resultCaller.registerForActivityResult(
@@ -26,10 +27,12 @@ class WalletKeyManager internal constructor(
         token: String,
         web3AuthConfig: Web3AuthConfig,
         onSuccess: (ByteArray) -> Unit,
-        onFailure: () -> Unit
+        onFailure: () -> Unit,
+        onCancel: () -> Unit
     ) {
         this.onSuccess = onSuccess
         this.onFailure = onFailure
+        this.onCancel = onCancel
 
         web3AuthLauncher.launch(getAuthArgs(token, web3AuthConfig))
     }
@@ -45,7 +48,7 @@ class WalletKeyManager internal constructor(
             }
 
             is WalletKeyResult.Canceled -> {
-                /* no op */
+                onCancel?.invoke()
             }
         }
     }
