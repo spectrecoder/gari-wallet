@@ -91,6 +91,15 @@ object Gari {
         }
     }
 
+    /**
+     * Method will return signed transaction encoded in base64
+     * @param token - web3auth jwt token. Token should be refreshed before each function call {@link Gari#transferGariToken()}
+     * @param keyManager - instance of WalletKeyManager, which is taken care about wallet keys,
+     * check documentation to get more details
+     * {@see <a href="https://github.com/gari-network/gari-wallet-android-sdk#-key-management">WalletKeyManager doc</a>}
+     * @param receiverPublicKey - GARI public address to which it is planned to send tokens
+     * @param transactionAmount - amount of gari in lamports. A lamport has a value of 0.000000001 GARI
+     */
     suspend fun transferGariToken(
         token: String,
         keyManager: WalletKeyManager,
