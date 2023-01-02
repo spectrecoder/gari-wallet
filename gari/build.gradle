@@ -22,13 +22,16 @@ android {
         targetSdk appConfig.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        consumerProguardFiles 'consumer-rules.pro'
+
+        manifestPlaceholders = [authRedirect: "deeplink_placeholder"]
     }
 
     buildTypes {
         debug {
             minifyEnabled false
         }
+
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

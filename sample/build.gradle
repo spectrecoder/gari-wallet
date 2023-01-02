@@ -47,7 +47,7 @@ android {
         }
         release {
             signingConfig signingConfigs.demo
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -92,8 +92,14 @@ dependencies {
 
 //    implementation 'io.github.gari-network:GariWallet:0.1'
 
-    // connect for development purpose
-    implementation project(":gari")
+//    connect for development purpose
+//    implementation project(":gari")
+
+//    connect for debug proguard
+    implementation(files("libs/gari-release.aar"))
+    implementation(web3Auth.core) {
+        exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on'
+    }
 
     testImplementation unitTesting.junit
 
