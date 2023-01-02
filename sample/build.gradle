@@ -90,19 +90,20 @@ dependencies {
     implementation network.retrofitConverterGson
     implementation network.okHttpLogging
 
-//    implementation 'io.github.gari-network:GariWallet:0.1'
+    /* connect for testing published library */
+    implementation 'io.github.gari-network:GariWallet:0.3'
 
-//    connect for development purpose
+    /* connect for development purpose */
 //    implementation project(":gari")
 
-//    connect for testing AAR directly
-    implementation(files("libs/gari-release.aar"))
+    /* connect for testing AAR directly */
+    /*implementation(files("libs/gari-release.aar"))
     implementation(web3Auth.core) {
         exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on'
     }
     implementation(solana.solanaWeb3) {
         exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
-    }
+    }*/
 
     testImplementation unitTesting.junit
 
