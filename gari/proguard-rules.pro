@@ -25,6 +25,3 @@
 -keepclassmembers class io.coin.gari.network.response.** { *; }
 
 -keepnames class io.coin.gari.domain.wallet.WalletKeyManager
-
--keep class com.portto.solana.web3.** { *; }
--dontwarn com.portto.solana.web3.**

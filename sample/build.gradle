@@ -95,10 +95,13 @@ dependencies {
 //    connect for development purpose
 //    implementation project(":gari")
 
-//    connect for debug proguard
+//    connect for testing AAR directly
     implementation(files("libs/gari-release.aar"))
     implementation(web3Auth.core) {
         exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on'
+    }
+    implementation(solana.solanaWeb3) {
+        exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
     }
 
     testImplementation unitTesting.junit
