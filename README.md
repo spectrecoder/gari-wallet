@@ -15,9 +15,17 @@ Provides solution for easy implementation custodial Gari Wallet in your products
 
 ## ⚡ Installation
 
-### Add Gari to Gradle
+### Connect Gari via Gradle
 
-...coming soon. For now it's possible to connect via library module.
+Open your app module gradle.build file, and add gari dependency:
+
+```groovy
+dependencies {
+   ...
+   implementation 'io.github.gari-network:gari-wallet:0.2'
+   ...
+}
+```
 
 ### Permissions
 
@@ -64,7 +72,15 @@ class DemoApplication : GariApp() {
 }
 ```
 
-- initialize Gari with your associated client id (ask support for that)
+Set web3auth config:
+- **web3AuthClientId:** client id from web3auth dashboard
+- **redirectUrl:** consist of 2 parts (package name + path, e.g. - *io.coin.gari://auth*), it should be added into white-list in web3auth dashboard, and scheme of the url should be added as **manifestPlaceholder** (check [here] (#manifest-placeholder))
+- **clientId:** - your personal gari client id
+- **verifierIdField:** - field key which identify user in your JWT token
+- **verifier:** - verifier name which is registered in web3auth dashboard
+- **verifierTitle:** - title for web3auth webpage
+- **verifierDomain:** - domain where your API service deployed for token verification
+- **network:** - type of network for web3auth configuration (check documentation of web3auth https://web3auth.io/docs/sdk/android/initialize#web3authoptions)
 
 ```kotlin
 class DemoApplication : GariApp() {
@@ -72,7 +88,20 @@ class DemoApplication : GariApp() {
     override fun onCreate() {
         super.onCreate()
 
-        Gari.initialize("...")
+        val web3AuthConfig = Web3AuthConfig(
+            web3AuthClientId = "",
+            redirectUrl = "io.coin.gari://auth",
+            verifierIdField = "uid",
+            verifier = "your-verifier-name",
+            verifierTitle = "Gari Wallet Demo",
+            verifierDomain = "https://demo-gari-sdk.vercel.app",
+            network = Web3Network.TESTNET
+        )
+
+        Gari.initialize(
+            clientId = "d8817deb-dceb-40a4-a890-21f0286c8fba",
+            web3AuthConfig = web3AuthConfig
+        )
     }
 }
 ``` 
