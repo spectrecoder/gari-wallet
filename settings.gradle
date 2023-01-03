@@ -16,6 +16,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GariSDK"
+rootProject.name = "Gari Wallet"
 include ':sample'
 include ':gari'

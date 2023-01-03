@@ -6,8 +6,8 @@ plugins {
 
 ext {
     PUBLISH_GROUP_ID = 'io.github.gari-network'
-    PUBLISH_VERSION = '0.3'
-    PUBLISH_ARTIFACT_ID = 'GariWallet'
+    PUBLISH_VERSION = '0.2'
+    PUBLISH_ARTIFACT_ID = 'gari-wallet'
 }
 
 apply from: '../dependencies.gradle'
@@ -21,7 +21,7 @@ android {
         minSdk appConfig.minSdk
         targetSdk appConfig.targetSdk
         versionCode 2
-        versionName "0.3"
+        versionName "0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'

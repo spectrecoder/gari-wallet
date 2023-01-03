@@ -91,7 +91,7 @@ dependencies {
     implementation network.okHttpLogging
 
     /* connect for testing published library */
-    implementation 'io.github.gari-network:GariWallet:0.3'
+    implementation 'io.github.gari-network:gari-wallet:0.2'
 
     /* connect for development purpose */
 //    implementation project(":gari")
