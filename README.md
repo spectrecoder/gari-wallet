@@ -1,6 +1,6 @@
 # Gari Wallet Android SDK
 
-Provides solution for easy implementation custodial Gari Wallet in your products. Web3Auth is used as a layer for saving wallet credentials. Check Web3Auth documentation to get more information (https://web3auth.io/docs/)
+Provides a solution for easy implementation of the custodial Gari Wallet in your products. Web3Auth is used as a layer for saving wallet credentials. Check Web3Auth documentation to get more information (https://web3auth.io/docs/)
 
 
 ## 💡 Features
@@ -17,7 +17,7 @@ Provides solution for easy implementation custodial Gari Wallet in your products
 
 ### Connect Gari via Gradle
 
-Open your app module gradle.build file, and add gari dependency:
+Open your app module gradle.build file, and add the gari dependency:
 
 ```groovy
 dependencies {
@@ -37,13 +37,13 @@ Open your app's `AndroidManifest.xml` file and add the following permission:
 
 ### Manifest placeholder
 
-Open your gradle.build file for your main application module - override manifest variable **$authRedirect**.
-This url will be used as deeplink scheme for Web3Auth redirects.
+Open your gradle.build file for your main application module - override manifest variables **$authRedirect**.
+This URL will be used as a deep link scheme for Web3Auth redirects.
 
-You should add it to whitelist during configuring Web3Auth dashboard.
-Read documentation to get more information - https://web3auth.io/docs/sdk/android/#configure-a-plug-n-play-project
+You should add it to the whitelist during configuring the Web3Auth dashboard.
+Read the documentation to get more information - https://web3auth.io/docs/sdk/android/#configure-a-plug-n-play-project
 
-All Logic for handling deeplink redirects has been already handled by Gari Wallet SDK, you just need to declare manifest variable in your gradle scripts.
+All Logic for handling deep link redirects has been already handled by Gari Wallet SDK, you just need to declare manifest variable in your Gradle scripts.
 
 ```groovy
 android {
@@ -74,12 +74,12 @@ class DemoApplication : GariApp() {
 
 Set web3auth config:
 - **web3AuthClientId:** client id from web3auth dashboard
-- **redirectUrl:** consist of 2 parts (package name + path, e.g. - *io.coin.gari://auth*), it should be added into white-list in web3auth dashboard, and scheme of the url should be added as **manifestPlaceholder** (check [here] (#manifest-placeholder))
+- **redirectUrl:** consist of 2 parts (package name + path, e.g. - *io.coin.gari://auth*), it should be added to the white list in the web3auth dashboard, and scheme of the URL should be added as **manifestPlaceholder** (check [here] (#manifest-placeholder))
 - **clientId:** - your personal gari client id
-- **verifierIdField:** - field key which identify user in your JWT token
-- **verifier:** - verifier name which is registered in web3auth dashboard
-- **verifierTitle:** - title for web3auth webpage
-- **verifierDomain:** - domain where your API service deployed for token verification
+- **verifierIdField:** - field key which identifies the user in your JWT token
+- **verifier:** - verifier name which is registered in the web3auth dashboard
+- **verifierTitle:** - title for web3auth web page
+- **verifierDomain:** - a domain where your API service deployed for token verification
 - **network:** - type of network for web3auth configuration (check documentation of web3auth https://web3auth.io/docs/sdk/android/initialize#web3authoptions)
 
 ```kotlin
@@ -116,7 +116,7 @@ Gari wallet SDK is completely friendly with coroutines API. It should be easy to
 
 ### Get Wallet State
 
-Here is example how you can retrieve wallet state by user's token:
+Here is an example how you can retrieve the wallet state by the user's token:
 
 ```kotlin
 class WalletDetailsViewModel : ViewModel() {
@@ -136,7 +136,7 @@ class WalletDetailsViewModel : ViewModel() {
 }
 ```
 
-Design of GariWalletState class allow to properly handle every situation on your UI:
+Design of GariWalletState class allows you to properly handle every situation on your UI:
 
 ```kotlin
 sealed class GariWalletState {
@@ -152,9 +152,9 @@ sealed class GariWalletState {
 ### Create Wallet
 
 ##### *Important:
-Token of the user should refreshed before calling function Gari.createWallet(). This limitation is coming from Web3Auth SDK.
+The token of the user should be refreshed before calling Gari.createWallet(). This limitation is coming from the Web3Auth SDK.
 
-What is WalletKeyManager and where you can get it - check "Key Management" documentation below on the page
+What is WalletKeyManager and where you can get it - check the "Key Management" documentation below on the page
 
 ```kotlin
 class WalletDetailsViewModel : ViewModel() {
@@ -173,13 +173,13 @@ class WalletDetailsViewModel : ViewModel() {
 ### Transfer Gari Token
 
 ##### *Important:
-Token of the user should refreshed before calling function Gari.transferGariToken(). This limitation is coming from Web3Auth SDK.
+The token of the user should be refreshed before calling the function Gari.transferGariToken(). This limitation is coming from Web3Auth SDK.
 
-Every transaction consist of 2 steps:
+Every transaction consists of 2 steps:
 1. Create signed transaction through Gari Wallet Sdk
 2. Send transaction into your backend for future processing
 
-For getting signed transaction you can follow this example:
+For getting a signed transaction you can follow this example:
 ```kotlin
 class WalletDetailsViewModel : ViewModel() {
 
@@ -211,7 +211,7 @@ class WalletDetailsViewModel : ViewModel() {
 
 ### Request airdrop
 
-Airdrop operation requires wallet private key - from which Gari tokens will be transferred into user account.
+Airdrop operation requires a wallet private key - from which Gari tokens will be transferred into the user account.
 
 ```kotlin
 class AirdropViewModel : ViewModel() {
@@ -241,7 +241,7 @@ class AirdropViewModel : ViewModel() {
 
 ## 🌟 Key Management
 
-For operations which are required wallet private key (like transactions), you have instantiate WalletKeyManager, which is part of Gari Wallet SDK
+For operations which are a required wallet private key (like transactions), you have instantiated WalletKeyManager, which is part of Gari Wallet SDK
 
 ```kotlin
 object Gari {
